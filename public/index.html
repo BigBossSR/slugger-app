@@ -67,28 +67,29 @@
 
 	<template id="userlist-template">
 		<tr class="user">
-			<td class="user-name usr-detail">{{riders.first_name}}</div>
-			<td class="locations usr-detail">From: {{riders.work_locale}} | To: {{riders.home_locale}} </div> <!--in js, figure out which these will be -->
-			<td class="time usr-detail">{{riders.evening_time}}</div>
-			<td class="score usr-detail">{{riders.score}}</div>
+			<td class="user-name usr-detail"><a href="#users/{{id}}">{{first_name}}</a></div>
+			<td class="locations usr-detail">From: {{work_locale}} | To: {{home_locale}} </div> <!--in js, figure out which these will be -->
+			<td class="time usr-detail">{{evening_time}}</div>
+			<td class="score usr-detail">{{score}}</div>
 		</tr>
 	</template>
 
-	<template>
-		<div class="name">{{riders.first_name}}</div>
-		<div class="username">{{riders.username}}</div>
+	<template id="profile-template">
+		<div class="close">CLOSE</div>
+		<div class="name">{{first_name}}</div>
+		<div class="username">{{username}}</div>
 		<div class="itinerary">Various itineraries. maybe a table</div>
 	</template>
 
 </div>
 
-
+<script src="index.js"></script>
 <script src="models.js"></script>
 <script src="collections.js"></script>
 <script src="views.js"></script>
 <script src="router.js"></script>
 
-<script src="index.js"></script>
+
 
 </body>
 </html>

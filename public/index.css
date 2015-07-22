@@ -76,3 +76,16 @@ a {
 	color: black;
 }
 
+.profile-container {
+	position: absolute;
+	margin: 0 auto;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	font-size: 1rem;
+	background-color: white;
+	border-radius: 15px;
+	padding: 3%;
+	width: 40%;
+}
+

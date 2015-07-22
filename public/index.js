@@ -1,24 +1,28 @@
-var app = {}
-	app.myUsers = new UserList
-	app.dispatcher = _.clone(Backbone.Events)
-	app.views = []
+var app = {
+	Models: {},
+	Collections: {},
+	Views: {},
+	Routers: {}
+}
+
+
 
 
 $(document).on("ready", function(){
+	app.dispatcher = _.clone(Backbone.Events)
 
-
+	app.profileView = new app.Views.Profile()
+	
+	app.myUsers = new app.Collections.UserList
+	
 	app.myUsers.on("add", function(model){		
-		var view = new UserView({model})
-		app.views.push(view)
-		console.log(view)
+		var view = new app.Views.User({model})
+		//app.views.push(view)
 		view.render()
 	})
 
-	app.myUsers.fetch(		)
 
-	console.log(app.views)
-
-	var riders = new User (
+/*	var riders = new User (
 		{
 			first_name: "Gaylord Jenkins",
 			email: "myface@face.com",
@@ -29,6 +33,13 @@ $(document).on("ready", function(){
 		}
 	)
 
-	app.myUsers.add( riders )
+	app.myUsers.add( riders )*/
 
+	app.myUsers.fetch({
+		success: function() {
+			app.router = new app.Routers.MainRouter()
+			Backbone.history.start()
+		}
+	})
+	
 })

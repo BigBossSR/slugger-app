@@ -1,4 +1,4 @@
-var UserView = Backbone.View.extend({
+app.Views.User = Backbone.View.extend({
 
 	intitialize: function(){
 		this.render( this.template )
@@ -20,4 +20,22 @@ var UserView = Backbone.View.extend({
 	template: Handlebars.compile( $("#userlist-template").html() ),
 })
 
-var ProfileView
+
+app.Views.Profile = Backbone.View.extend({
+	el: document.getElementById("profile"),
+
+	events: {
+		"click .close": "hide",
+	},
+
+	render: function(model) {
+		this.$el.html( this.template(model.toJSON() ) )
+	},
+
+	hide: function() {
+		$(".profile-container").slideUp()
+	},
+
+	template: Handlebars.compile( $("#profile-template").html() ),
+
+})
