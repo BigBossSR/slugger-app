@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Get Your Slug On!</title>
+	<link rel="stylesheet" type="text/css" href="index.css">
+
+	<script src="libs/jquery.js"></script>
+	<script src="libs/underscore.js"></script>
+	<script src="libs/handlebars.js"></script>
+	<script src="libs/backbone.js"></script>
+</head>
+<body>
+
+<div class="page-container">
+
+	<div class="header">
+		<div class="logo-box">
+			<span>SLUGGR</span>
+			<div id="logo-img"></div>
+		</div>
+		<div class="menu-links">
+			<span>
+				I am a:
+				<select>
+					<option value="driver">Driver</option>
+					<option value="rider">Rider</option>
+				</select>
+			</span>
+			<span>
+				<a href="#">Register</a> / <a href="#">Login</a>
+			</span>
+			<span>
+				<a href="#">Get Started!</a>
+			</span>
+		</div>
+	</div>
+
+	<div class="map-container">
+		<iframe
+			 width="100%"
+			 height="100%"
+			 frameborder="0" style="border:0"
+			 src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCqUON2u3RClI42Sh-50zz3NiWf0ZigDYA&q=Washington,DC" allowfullscreen>
+		</iframe>
+
+	</div>
+
+	<div class="right-sidebar">
+		<div class="input-box">
+			<div class="sidebar-title">Find a Rideshare!</div>
+			Where are you leaving?
+			<div><input class="departure" type="text"></div>
+			Where are you going?
+			<div><input class="destination" type="text"></div>
+			What time?
+			<div><input class="time" type="time"></div>
+		</div>
+		<div class="user-list">
+			<table id="user-location"></table>
+		</div>
+	</div>
+
+	<div class="profile-container">
+		<div id="profile"></div>
+	</div>
+
+
+	<template id="userlist-template">
+		<tr class="user">
+			<td class="user-name usr-detail">{{riders.first_name}}</div>
+			<td class="locations usr-detail">From: {{riders.work_locale}} | To: {{riders.home_locale}} </div> <!--in js, figure out which these will be -->
+			<td class="time usr-detail">{{riders.evening_time}}</div>
+			<td class="score usr-detail">{{riders.score}}</div>
+		</tr>
+	</template>
+
+	<template>
+		<div class="name">{{riders.first_name}}</div>
+		<div class="username">{{riders.username}}</div>
+		<div class="itinerary">Various itineraries. maybe a table</div>
+	</template>
+
+</div>
+
+
+<script src="models.js"></script>
+<script src="collections.js"></script>
+<script src="views.js"></script>
+<script src="router.js"></script>
+
+<script src="index.js"></script>
+
+</body>
+</html>
