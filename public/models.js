@@ -1,5 +1,20 @@
 var User = Backbone.Model.extend({
 
+	initialize: function() {
+		if (morning) {
+			this.set({
+				depart: this.get("home_locale"),
+			dest : this.get("work_locale"),
+			time : this.get("morning_time")
+			})
+		} else {
+			this.set({depart : this.get("work_locale"),
+			dest : this.get("home_locale"),
+			time : this.get("evening_time")
+			})
+		}
+	},
+
 	validate: function(attrs) {
 		if (attrs.username.length < 1) {
 			return alert("you need a username")
@@ -10,6 +25,6 @@ var User = Backbone.Model.extend({
 		if (attrs.email.length < 1) {
 			return alert("you need an email")
 		}
-	}
+	},
 
 })

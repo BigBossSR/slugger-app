@@ -27,13 +27,35 @@
 				</select>
 			</span>
 			<span>
-				<a href="#">Register</a> / <a href="#">Login</a>
+				<a href="#signin">Register / Login</a>
 			</span>
 			<span>
 				<a href="#">Get Started!</a>
 			</span>
 		</div>
 	</div>
+
+	<div class="view-container">
+		<div id="prof"></div>
+		<div id="signin">
+			<div class="close"><a href="#">x</a></div>
+			<h2>Login</h2>
+			Username:
+			<input type="text">
+			Password:
+			<input type="text">
+			<h2>...or Register a Slug</h2>
+					Username:
+			<input type="text">
+			Password:
+			<input type="text">
+			Email:
+			<input type="text">
+			First Name:
+			<input type="text">
+		</div>
+	</div>
+
 
 	<div class="map-container">
 		<iframe
@@ -60,25 +82,31 @@
 		</div>
 	</div>
 
-	<div class="profile-container">
-		<div id="profile"></div>
-	</div>
 
 
 	<template id="userlist-template">
-		<tr class="user">
-			<td class="user-name usr-detail"><a href="#users/{{id}}">{{first_name}}</a></div>
-			<td class="locations usr-detail">From: {{work_locale}} | To: {{home_locale}} </div> <!--in js, figure out which these will be -->
-			<td class="time usr-detail">{{evening_time}}</div>
-			<td class="score usr-detail">{{score}}</div>
+		<tr>
+			<td class="user-name usr-detail">{{first_name}} <span>{{#if driver}}🚘{{else}}🚶{{/if}}</span></td>
+			<td class="score usr-detail">{{score}}</div></td>
+			<td class="time usr-detail">{{time}}</div></td>
+		</tr>
+		<tr>	
+			<td class="locations usr-detail">{{depart}} >>> {{dest}} </td>
 		</tr>
 	</template>
 
 	<template id="profile-template">
-		<div class="close">CLOSE</div>
-		<div class="name">{{first_name}}</div>
-		<div class="username">{{username}}</div>
-		<div class="itinerary">Various itineraries. maybe a table</div>
+		<div class="prof__close">X</div>
+		<div class="prof__name">{{first_name}}</div>
+		<div class="prof__username">{{username}}</div>
+		<div class="prof__itinerary">Home: {{home_locale}}
+		Work: {{work_locale}}
+		☀ {{morning_time}} 🌙 {{evening_time}}
+		</div>
+	</template>
+
+	<template id="signin-template">
+
 	</template>
 
 </div>

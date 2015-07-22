@@ -30,7 +30,7 @@ a {
 .right-sidebar {
 	display: inline-block;
 	width: 33%;
-	background: RGB(233, 238, 48);
+	background: RGB(24, 138, 138);
 	color: white;
 	height: 85vh;
 	font-size: 1rem;
@@ -39,18 +39,20 @@ a {
 }
 
 .logo-box {
-	color: RGB(233, 238, 48);
+	color: RGB(24, 138, 138);
 	font-size: 48px;
 	font-family: Trajan, monospace;
 	display: inline-block;
+	width: 33%;
 }
 
 #logo-img {
 	display: inline-block;
-	background-image: url("http://www.nps.gov/common/uploads/teachers/assets/images/akr/park/sitk/CB8C7E54-1DD8-B71C-07BBF4C90488C801/CB8C7E54-1DD8-B71C-07BBF4C90488C801.jpg");
-	background-size: cover;
-	height: 80%;
-	width: auto;
+	background-image: url("assets/nonbrandedlogo.png");
+	background-size: contain;
+	height: 12vh;
+	width: 36%;
+	background-repeat: no-repeat;
 }
 
 .menu-links {
@@ -63,6 +65,11 @@ a {
 	height: 35vh;
 }
 
+.sidebar-title {
+	text-align: center;
+	font-size: 28	px;
+}
+
 .user-list {
 	border-radius: 15px 15px 0 0 ;
 	background-color: white;
@@ -71,15 +78,28 @@ a {
 	height: 50vh;
 }
 
+.user {
+	cursor: pointer;
+}
+
 .usr-detail {
 	display: inline-block;
 	color: black;
 }
 
-.profile-container {
+.view-container {
+	width: 100%;
+	height: 85vh;
+	position: absolute;
+	background-color: RGBA(0,0,0,.7);
+	display: none;
+}
+
+#prof, #signin {
+	display: none;
 	position: absolute;
 	margin: 0 auto;
-	top: 50%;
+	top: 35%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	font-size: 1rem;
@@ -87,5 +107,21 @@ a {
 	border-radius: 15px;
 	padding: 3%;
 	width: 40%;
+	font-family: Tahoma;
 }
+
+#signin {}
+
+.prof__name {
+	font-size: 20px;
+	color: navy;
+}
+
+.prof__username{
+	color: gray;
+	font-style: italic;
+}
+
+
+
 

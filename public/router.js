@@ -3,15 +3,19 @@ app.Routers.MainRouter = Backbone.Router.extend({
 	routes: {
 		"": "viewUserList",
 		"users/:id": "viewUser",
+		"signin": "login",
 	},
 
 	viewUserList: function() {
-		$(".profile-container").slideUp()
+		console.log("yo")
+		$("#signin").slideUp()
+		$(".view-container").fadeOut()
 	},
 
+	//currently unused
 	viewUser: function(id) {
 		//make profile view active
-		$(".profile-container").slideDown()
+		$(".view-container").fadeIn()
 
 		var userId = id
 		var userModel = app.myUsers.find(function(user){
@@ -22,5 +26,10 @@ app.Routers.MainRouter = Backbone.Router.extend({
 			console.log('yes')
 			app.profileView.render(userModel)
 		}
+	},
+
+	login: function() {
+		$(".view-container").fadeIn()
+		$("#signin").slideDown()
 	},
 })
