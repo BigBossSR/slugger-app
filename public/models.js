@@ -1,16 +1,19 @@
 var User = Backbone.Model.extend({
 
 	initialize: function() {
+//this will need updating if tables change
+
 		if (morning) {
 			this.set({
 				depart: this.get("home_locale"),
-			dest : this.get("work_locale"),
-			time : this.get("morning_time")
+				dest : this.get("work_locale"),
+				time : this.get("morning_time")
 			})
 		} else {
-			this.set({depart : this.get("work_locale"),
-			dest : this.get("home_locale"),
-			time : this.get("evening_time")
+			this.set({
+				depart : this.get("work_locale"),
+				dest : this.get("home_locale"),
+				time : this.get("evening_time")
 			})
 		}
 	},

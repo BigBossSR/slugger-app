@@ -95,7 +95,7 @@ a {
 	display: none;
 }
 
-#prof, #signin {
+#prof, #signin, #edit-user {
 	display: none;
 	position: absolute;
 	margin: 0 auto;
@@ -110,7 +110,10 @@ a {
 	font-family: Tahoma;
 }
 
-#signin {}
+#signin {
+	background-color: rgb(27, 153, 153);
+	color: white;
+}
 
 .prof__name {
 	font-size: 20px;
@@ -123,5 +126,12 @@ a {
 }
 
 
+.btn {
+	padding: 3px;
+	background-color: rgb(59, 169, 169);
+	font-size: 14px;
+	vertical-align: middle;
+
+}
 
 

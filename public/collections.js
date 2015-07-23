@@ -4,7 +4,6 @@ app.Collections.UserList=Backbone.Collection.extend({
 
 	comparator: "time", //a function that compares parseInt(model.get("time") ) and new Date().getHours()
 
-	//url: "http://91657c07.ngrok.io/",
-	url: "/users",
-
+	url: "http://557ed386.ngrok.io/demo_users",
+	//url: "/users",
 })

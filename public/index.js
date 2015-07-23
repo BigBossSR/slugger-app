@@ -16,6 +16,8 @@ $(document).on("ready", function(){
 	app.dispatcher = _.clone(Backbone.Events)
 
 	app.profileView = new app.Views.Profile()
+	app.signinView = new app.Views.Signin()
+	app.editView = new app.Views.EditUser()
 	
 	app.myUsers = new app.Collections.UserList
 
@@ -34,13 +36,15 @@ $(document).on("ready", function(){
 		//generate new views
 
 	//a listener for filter requests
-		//jquery hide those that don't applys
+		//jquery hide those that don't apply
 
 	app.myUsers.fetch({
 		success: function() {
 			app.myUsers.sort()
 			//this sorts by the "morning_time" comparator, which is dumb and does not account for too-early times
 			_.map(app.myUsers.models, function(model) {
+
+				//TO DO: only generate a view if user is groupless
 				var view = new app.Views.User({model})
 				userViewsArray.push(view)
 				view.render()

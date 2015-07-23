@@ -4,11 +4,13 @@ app.Routers.MainRouter = Backbone.Router.extend({
 		"": "viewUserList",
 		"users/:id": "viewUser",
 		"signin": "login",
+		"edit-profile":"edit",
 	},
 
 	viewUserList: function() {
 		console.log("yo")
 		$("#signin").slideUp()
+		$("#edit-user").slideUp()
 		$(".view-container").fadeOut()
 	},
 
@@ -31,5 +33,11 @@ app.Routers.MainRouter = Backbone.Router.extend({
 	login: function() {
 		$(".view-container").fadeIn()
 		$("#signin").slideDown()
+	},
+
+	edit: function() {
+		$(".view-container").fadeIn()
+		$("#edit-user").slideDown()
+		app.editView.render()
 	},
 })

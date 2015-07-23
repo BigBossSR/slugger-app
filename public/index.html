@@ -30,8 +30,12 @@
 				<a href="#signin">Register / Login</a>
 			</span>
 			<span>
+				<a href="#edit-profile">My Profile</a>
+			</span>
+			<span>
 				<a href="#">Get Started!</a>
 			</span>
+			<!-- Info re: your car -->
 		</div>
 	</div>
 
@@ -40,20 +44,25 @@
 		<div id="signin">
 			<div class="close"><a href="#">x</a></div>
 			<h2>Login</h2>
-			Username:
-			<input type="text">
-			Password:
-			<input type="text">
-			<h2>...or Register a Slug</h2>
-					Username:
-			<input type="text">
-			Password:
-			<input type="text">
 			Email:
-			<input type="text">
+			<input type="email" id="loginEmail">
+			Password:
+			<input type="password" id="loginPassword">
+			<button type="button" class="btn btn__login">Log In</button>
+			<h2>...or Register a Slug</h2>
+			Username:
+			<input type="text" id="register-username">
+			Password:
+			<input type="password" id="register-password">
+			Email:
+			<input type="email" id="register-email">
 			First Name:
-			<input type="text">
+			<input type="text" id="register-firstname">
+			Last Name:
+			<input type="text" id="register-lastname">
+			<button type="button" class="btn btn__register">Register</button>
 		</div>
+		<div id="edit-user"></div>
 	</div>
 
 
@@ -105,8 +114,18 @@
 		</div>
 	</template>
 
-	<template id="signin-template">
-
+	<template id="edit-user-template">
+	<!-- make these conditionals - if no info, autofill the field type -->
+		<input type="text" class="edt__name" value="{{user.first_name}}">
+		<input type="text" class="edt__username" value="{{user.username}}">
+		🏠 <input class="edt__home" type="text" value="{{itinerary.home_locale}}">
+		🏢 <input class="edt__work" type="text" value="{{itinerary.work_locale}}">
+		☀ <input class="edt__am" type="text" value="{{itinerary.morning_time}}"> 
+		🌙 <input class="edt__pm" type="text" value="{{itinerary.evening_time}}">
+		Preferences: <textarea class="edt__pref">{{user.preferences}}</textarea>
+		Bio: <textarea class="edt__bio"></textarea>
+		<button class="btn btn__discard">Discard Changes</button>
+		<button class="btn btn__save">Save Changes</button>
 	</template>
 
 </div>

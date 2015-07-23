@@ -20,6 +20,7 @@ var createUser = function(data) {
     home_locale: data.home_locale,
     work_locale: data.work_locale,
     driver: data.driver,
+  
     
     createdAt: new Date(),
   }
