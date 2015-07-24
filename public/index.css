@@ -115,15 +115,30 @@ a {
 	color: white;
 }
 
-.prof__name {
+
+
+.prof__name, .edt__name {
 	font-size: 20px;
 	color: navy;
 }
 
-.prof__username{
+.prof__username, .edt__username {
 	color: gray;
 	font-style: italic;
 }
+
+.name-box {
+	display: inline-block;
+	width: 30%;
+}
+
+.addr-box {
+	display: inline-block;
+	width: 68%;
+	text-align: right;
+}
+
+
 
 
 .btn {

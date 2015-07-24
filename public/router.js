@@ -9,6 +9,7 @@ app.Routers.MainRouter = Backbone.Router.extend({
 
 	viewUserList: function() {
 		console.log("yo")
+		populateList()
 		$("#signin").slideUp()
 		$("#edit-user").slideUp()
 		$(".view-container").fadeOut()
@@ -33,6 +34,7 @@ app.Routers.MainRouter = Backbone.Router.extend({
 	login: function() {
 		$(".view-container").fadeIn()
 		$("#signin").slideDown()
+		$("#loginEmail").focus()
 	},
 
 	edit: function() {

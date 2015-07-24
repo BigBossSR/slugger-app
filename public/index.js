@@ -10,14 +10,29 @@ var morning
 //currently disused
 var userViewsArray = []
 
+var rootUrl = "https://sluggr-api.herokuapp.com"
+
+var closeViewOnEsc = function(e) {
+	if (e.keyCode === 27) {
+		//clear all nput fielders in signin
+		$(this.$el).find("input").val("")
+		app.router.navigate("", {trigger: true})
+	}
+}
+
 //test this when server is up
 var populateList = function(){
-	$.ajax("http://557ed386.ngrok.io/demo_users", {
+
+	$.ajax(rootUrl+"/demo_users", {
 		method: "GET",
 		success: function(json) {
-			console.log(json)
+			app.myUsers.reset()
+			app.dispatcher.trigger("reset")
+
+
+
 			var userList = json.user
-			console.log(userList)
+
 			_.each(userList, function(item){
 			   app.myUsers.add(item) 
 			})
@@ -27,11 +42,9 @@ var populateList = function(){
 				userViewsArray.push(view)
 				view.render()
 			})
-			console.log(app.myUsers)
-			//consider instantiating a second router, in case users don't populate
 
+	//consider instantiating a second router, in case users don't populate
 		}
-
 	})
 }
 
@@ -61,7 +74,10 @@ $(document).on("ready", function(){
 	//a listener for filter requests
 		//jquery hide those that don't apply
 
-	populateList()
+	$("#signin").on("blur", function(){
+		console.log('hello')
+		app.dispatcher.trigger("close")
+	})
 	
 	app.router = new app.Routers.MainRouter()
 	Backbone.history.start()

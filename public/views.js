@@ -7,8 +7,14 @@ app.Views.User = Backbone.View.extend({
 
 	initialize: function(){
 		this.listenTo(this.model, "change", function(){
+			console.log("change")
 			this.updateView(this.model) 
 		})
+		this.listenTo(app.dispatcher, "reset", function(){
+			console.log("reset")
+			this.remove()
+		})
+
 	},
 
 	render: function(model) {
@@ -17,32 +23,19 @@ app.Views.User = Backbone.View.extend({
 	},
 
 	updateView: function(model){
-		
 		var modelData = this.model.toJSON() 
-
-	//display the relevant data based on time of day
-/*		if (morning) {
-			modelData.depart = modelData.home_locale
-			modelData.dest = modelData.work_locale
-			modelData.time = modelData.morning_time
-		} else {
-			modelData.depart = modelData.work_locale
-			modelData.dest = modelData.home_locale
-			modelData.time = modelData.evening_time
-		} */
-
 
 		this.$el.html( this.template(modelData) )
 	},
 
 //open a user profile
-	viewUser: function(id) {
+	viewUser: function() {
 		$(".view-container").fadeIn()
 		$("#prof").slideDown()
 		//finds the model of the clicked view, to populate the profile view
-		var userId = this.model.id
+		var userId = this.model.get("email")
 		var userModel = app.myUsers.find(function(user){
-			return user.get("id") === userId
+			return user.get("email") === userId
 		})
 
 		if (userModel) {
@@ -60,6 +53,17 @@ app.Views.Profile = Backbone.View.extend({
 	events: {
 		"click .prof__close": "hide",
 	},
+
+	initialize: function(){
+		this.listenTo(app.dispatcher, "close", function(){
+			this.hide()
+		} )
+	},
+
+	exitCheck: function(event) {
+		closeViewOnEsc(event)
+	},
+
 
 	render: function(model) {
 		this.$el.html( this.template(model.toJSON() ) )
@@ -81,28 +85,35 @@ app.Views.Signin = Backbone.View.extend({
 	events: {
 		"click .btn__login" : "loginUser",
 		"click .btn__register": "registerUser",
+		"keyup :input" : "exitCheck",
+	},
+
+	exitCheck: function(event) {
+		closeViewOnEsc(event)
 	},
 
 	loginUser: function() {
 		var email = $("#loginEmail").val()
 		var password = $("#loginPassword").val()
 
-		$.ajax("http://557ed386.ngrok.io", {
+		$.ajax(rootUrl + "", {
 			method: "GET",
 			headers: {
 				email: email,
 				password: password
 			},
-		}).success( function(json) {
-			console.log(json)
-			//go through "users" to find a match
-			app.CurrentUser = json
+		}).
+			success( function(json) {
+				console.log(json)
+				//go through "users" to find a match
+				app.CurrentUser = json
 
 				if (json.error) {
-					alert (json.error)
+					alert(json.error)
+					return
 				}
-
-
+			
+				app.router.navigate("", {trigger: true})
 			}
 		).error(function (error){
 			
@@ -112,7 +123,7 @@ app.Views.Signin = Backbone.View.extend({
 
 	registerUser: function(){
 
-		$.ajax("http://557ed386.ngrok.io/demo_user/create", {
+		$.ajax(rootUrl + "/demo_user/create", {
 			method: "POST",
 			data: {
 				email: $("#register-email").val(),
@@ -124,7 +135,8 @@ app.Views.Signin = Backbone.View.extend({
 		}).success( function(data){
 			console.log("success", data)
 			app.CurrentUser = data
-			populateList()
+			app.router.navigate("", {trigger: true})
+			
 		}).error( function(error){
 			console.log("error", error)
 		})
@@ -137,7 +149,12 @@ app.Views.EditUser = Backbone.View.extend({
 
 	events: {
 		"click .btn__discard" : "discardChanges",
-		"click .btn__save" : "saveEdits"
+		"click .btn__save" : "saveEdits",
+		"keyup" : "exitCheck",
+	},
+
+	exitCheck: function(event) {
+		closeViewOnEsc(event)
 	},
 //this will be sent by the router from app.currentuser
 	render: function(model){
@@ -157,7 +174,7 @@ app.Views.EditUser = Backbone.View.extend({
 		
 
 		//app.CurrentUser.save()
-		$.ajax("http://557ed386.ngrok.io/demo_user/edit",{
+		$.ajax(rootUrl + "/demo_user/edit",{
 			method: "PUT",
 			headers: {
 				email: app.CurrentUser.user.email,
@@ -165,6 +182,7 @@ app.Views.EditUser = Backbone.View.extend({
 			data: app.CurrentUser,
 		}).success(function(data) {
 			console.log("success updating", data)
+			app.router.navigate("", {trigger: true})
 		}).error(function(error){
 			console.log("error updating", error)
 		})
@@ -178,11 +196,7 @@ app.Views.EditUser = Backbone.View.extend({
 	},
 
 	discardChanges: function(){
-		var discardYes = confirm("Exit without saving?")
-
-		if( discardYes ) {
-			app.router.navigate("", {trigger: true})
-		}
+		app.router.navigate("", {trigger: true})
 	},
 
 	template: Handlebars.compile( $("#edit-user-template").html() ),
