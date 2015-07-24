@@ -10,7 +10,30 @@ var morning
 //currently disused
 var userViewsArray = []
 
+//test this when server is up
+var populateList = function(){
+	$.ajax("http://557ed386.ngrok.io/demo_users", {
+		method: "GET",
+		success: function(json) {
+			console.log(json)
+			var userList = json.user
+			console.log(userList)
+			_.each(userList, function(item){
+			   app.myUsers.add(item) 
+			})
+			_.map(app.myUsers.models, function(model) {
+//TO DO: only generate a view if user is groupless				
+				var view = new app.Views.User({model})
+				userViewsArray.push(view)
+				view.render()
+			})
+			console.log(app.myUsers)
+			//consider instantiating a second router, in case users don't populate
 
+		}
+
+	})
+}
 
 $(document).on("ready", function(){
 	app.dispatcher = _.clone(Backbone.Events)
@@ -38,13 +61,23 @@ $(document).on("ready", function(){
 	//a listener for filter requests
 		//jquery hide those that don't apply
 
-	app.myUsers.fetch({
-		success: function() {
+	populateList()
+	
+	app.router = new app.Routers.MainRouter()
+	Backbone.history.start()
+	
+})
+
+//fetch for dummy data, switched away from fetch b/c
+	//collection was not cooperating with data table
+/*	app.myUsers.fetch({
+		success: function(data) {
+			console.log(data)
 			app.myUsers.sort()
 			//this sorts by the "morning_time" comparator, which is dumb and does not account for too-early times
 			_.map(app.myUsers.models, function(model) {
-
 				//TO DO: only generate a view if user is groupless
+				
 				var view = new app.Views.User({model})
 				userViewsArray.push(view)
 				view.render()
@@ -52,10 +85,7 @@ $(document).on("ready", function(){
 			app.router = new app.Routers.MainRouter()
 			Backbone.history.start()
 		}
-	})
-
-	
-})
+	})*/
 
 //derogated - functionality now exists on the view
 	/*app.myUsers.on("change", function(model){

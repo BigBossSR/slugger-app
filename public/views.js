@@ -124,6 +124,7 @@ app.Views.Signin = Backbone.View.extend({
 		}).success( function(data){
 			console.log("success", data)
 			app.CurrentUser = data
+			populateList()
 		}).error( function(error){
 			console.log("error", error)
 		})

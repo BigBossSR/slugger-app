@@ -2,7 +2,7 @@ app.Routers.MainRouter = Backbone.Router.extend({
 
 	routes: {
 		"": "viewUserList",
-		"users/:id": "viewUser",
+		//"users/:id": "viewUser",
 		"signin": "login",
 		"edit-profile":"edit",
 	},
