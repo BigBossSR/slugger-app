@@ -95,7 +95,7 @@ a {
 	display: none;
 }
 
-#prof, #signin, #edit-user {
+#user-focus, #signin, #edit-user {
 	display: none;
 	position: absolute;
 	margin: 0 auto;
@@ -115,7 +115,9 @@ a {
 	color: white;
 }
 
-
+.edt {
+	display: none;
+}
 
 .prof__name, .edt__name {
 	font-size: 20px;

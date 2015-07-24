@@ -31,7 +31,9 @@ app.Views.User = Backbone.View.extend({
 //open a user profile
 	viewUser: function() {
 		$(".view-container").fadeIn()
-		$("#prof").slideDown()
+		$(".edt").hide()
+		$(".prof").show()
+		$("#user-focus").slideDown()
 		//finds the model of the clicked view, to populate the profile view
 		var userId = this.model.get("email")
 		var userModel = app.myUsers.find(function(user){
@@ -48,10 +50,13 @@ app.Views.User = Backbone.View.extend({
 
 
 app.Views.Profile = Backbone.View.extend({
-	el: document.getElementById("prof"),
+	el: document.getElementById("user-focus"),
 
 	events: {
 		"click .prof__close": "hide",
+		"click .btn__discard" : "discardChanges",
+		"click .btn__save" : "saveEdits",
+		"keyup" : "exitCheck",
 	},
 
 	initialize: function(){
@@ -64,14 +69,52 @@ app.Views.Profile = Backbone.View.extend({
 		closeViewOnEsc(event)
 	},
 
-
 	render: function(model) {
+		console.log(model)
 		this.$el.html( this.template(model.toJSON() ) )
 	},
 
 	hide: function() {
 		$(".view-container").fadeOut()
-		$("#prof").slideUp()
+		$("#user-focus").slideUp()
+	},
+
+	saveEdits: function(){
+		
+			app.CurrentUser.user.username = $(".edt__username").val(),
+			app.CurrentUser.user.first_name = $(".edt__name").val(),
+			app.CurrentUser.itinerary.home_locale = $(".edt__home").val(),
+			app.CurrentUser.itinerary.work_locale = $(".edt__work").val(),
+			app.CurrentUser.itinerary.morning_time = $(".edt__am").val(),
+			app.CurrentUser.itinerary.evening_time = $(".edt__pm").val(),
+			app.CurrentUser.user.preferences = $(".edt__pref").val(),
+			app.CurrentUser.user.bio = $(".edt__bio").val(),
+		
+
+		//app.CurrentUser.save()
+		$.ajax(rootUrl + "/demo_user/edit",{
+			method: "PUT",
+			headers: {
+				email: app.CurrentUser.user.email,
+			},
+			data: app.CurrentUser,
+		}).success(function(data) {
+			console.log("success updating", data)
+			app.router.navigate("", {trigger: true})
+		}).error(function(error){
+			console.log("error updating", error)
+		})
+		/*headers: {
+			email: app.CurrentUser.email
+		},
+		data: {
+
+		},*/
+
+	},
+
+	discardChanges: function(){
+		app.router.navigate("", {trigger: true})
 	},
 
 	template: Handlebars.compile( $("#profile-template").html() ),
@@ -148,9 +191,7 @@ app.Views.EditUser = Backbone.View.extend({
 	el: document.getElementById("edit-user"),
 
 	events: {
-		"click .btn__discard" : "discardChanges",
-		"click .btn__save" : "saveEdits",
-		"keyup" : "exitCheck",
+
 	},
 
 	exitCheck: function(event) {
@@ -161,43 +202,7 @@ app.Views.EditUser = Backbone.View.extend({
 		this.$el.html( this.template( app.CurrentUser ) )
 	},
 
-	saveEdits: function(){
-		
-			app.CurrentUser.user.username = $(".edt__username").val(),
-			app.CurrentUser.user.first_name = $(".edt__name").val(),
-			app.CurrentUser.itinerary.home_locale = $(".edt__home").val(),
-			app.CurrentUser.itinerary.work_locale = $(".edt__work").val(),
-			app.CurrentUser.itinerary.morning_time = $(".edt__am").val(),
-			app.CurrentUser.itinerary.evening_time = $(".edt__pm").val(),
-			app.CurrentUser.user.preferences = $(".edt__pref").val(),
-			app.CurrentUser.user.bio = $(".edt__bio").val(),
-		
-
-		//app.CurrentUser.save()
-		$.ajax(rootUrl + "/demo_user/edit",{
-			method: "PUT",
-			headers: {
-				email: app.CurrentUser.user.email,
-			},
-			data: app.CurrentUser,
-		}).success(function(data) {
-			console.log("success updating", data)
-			app.router.navigate("", {trigger: true})
-		}).error(function(error){
-			console.log("error updating", error)
-		})
-		/*headers: {
-			email: app.CurrentUser.email
-		},
-		data: {
-
-		},*/
-
-	},
-
-	discardChanges: function(){
-		app.router.navigate("", {trigger: true})
-	},
+	
 
 	template: Handlebars.compile( $("#edit-user-template").html() ),
 

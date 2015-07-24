@@ -73,12 +73,12 @@ $(document).on("ready", function(){
 
 	//a listener for filter requests
 		//jquery hide those that don't apply
-
-	$("#signin").on("blur", function(){
+/*
+	$(".view-container").on("click", function(){
 		console.log('hello')
 		app.dispatcher.trigger("close")
 	})
-	
+	*/
 	app.router = new app.Routers.MainRouter()
 	Backbone.history.start()
 	

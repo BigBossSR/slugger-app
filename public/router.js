@@ -16,7 +16,7 @@ app.Routers.MainRouter = Backbone.Router.extend({
 	},
 
 	//currently unused
-	viewUser: function(id) {
+/*	viewUser: function(id) {
 		//make profile view active
 		$(".view-container").fadeIn()
 
@@ -29,7 +29,7 @@ app.Routers.MainRouter = Backbone.Router.extend({
 			console.log('yes')
 			app.profileView.render(userModel)
 		}
-	},
+	},*/
 
 	login: function() {
 		$(".view-container").fadeIn()
@@ -39,7 +39,13 @@ app.Routers.MainRouter = Backbone.Router.extend({
 
 	edit: function() {
 		$(".view-container").fadeIn()
-		$("#edit-user").slideDown()
-		app.editView.render()
+		$("#user-focus").slideDown()
+		var userId = app.CurrentUser.user.email
+		var userModel = app.myUsers.find(function(user){
+			return user.get("email") === userId
+		})
+		app.profileView.render(userModel)
+		$(".prof").hide()
+		$(".edt").show()
 	},
 })

@@ -34,12 +34,12 @@
 	</div>
 
 	<div class="view-container">
-		<div id="prof"></div>
+		<div id="user-focus"></div>
 		<div id="signin">
 			<div class="close"><a href="#">x</a></div>
 			<h2>Login</h2>
 			Email:
-			<input type="email" id="loginEmail" autocomplete="on">
+			<input type="email" id="loginEmail" autocomplete="o">
 			Password:
 			<input type="password" id="loginPassword">
 			<button type="button" class="btn btn__login">Log In</button>
@@ -107,32 +107,33 @@
 
 	<template id="profile-template">
 		<div class="prof__close">X</div>
-		<div class="prof__name">{{first_name}}</div>
-		<div class="prof__username">{{username}}</div>
-		<div class="prof__itinerary">Home: {{home_locale}}
-		Work: {{work_locale}}
-		☀ {{morning_time}} 🌙 {{evening_time}}
+		<div class="name-box">
+				<div class="prof prof__name">{{first_name}}</div>
+				<input type="text" class="edt edt__name" value="{{first_name}}">
+				<div class="prof prof__username">{{username}}</div>
+				<input type="text" class="edt edt__username" value="{{username}}">
 		</div>
+		<div class="addr-box">
+				<div class="prof">🏠 {{home_locale}}</div>
+				<span class="edt">🏠 <input class="edt__home" type="text" value="{{home_locale}}"></span>
+				<div class="prof">🏢 {{work_locale}}</div>
+				<span class="edt">🏢 <input class="edt__work" type="text" value="{{work_locale}}"></span>
+		</div>
+		<div><span class="prof">☀ {{morning_time}} 🌙 {{evening_time}}</span>
+			<span class="edt">☀ <input class="edt__am" type="text" value="{{morning_time}}"> </span>
+			<span class="edt">🌙 <input class="edt__pm" type="text" value="{{evening_time}}"></span>
+		</div>
+		<div>
+			<span class="prof">Preferences: {{preferences}} Bio: {{bio}}</span>
+			 <textarea class="edt edt__pref">{{preferences}}</textarea>
+			<textarea class="edt edt__bio"></textarea>
+		</div>
+		<button class="edt btn btn__discard">Discard Changes</button>
+		<button class="edt btn btn__save">Save Changes</button>
 	</template>
 
 	<template id="edit-user-template">
 	<!-- make these conditionals - if no info, autofill the field type -->
-		
-			<div class="name-box">
-				<input type="text" class="edt__name" value="{{user.first_name}}">
-				<input type="text" class="edt__username" value="{{user.username}}">
-			</div>
-			<div class="addr-box">	
-				🏠 <input class="edt__home" type="text" value="{{itinerary.home_locale}}">
-				🏢 <input class="edt__work" type="text" value="{{itinerary.work_locale}}">
-			</div>
-
-		☀ <input class="edt__am" type="text" value="{{itinerary.morning_time}}"> 
-		🌙 <input class="edt__pm" type="text" value="{{itinerary.evening_time}}">
-		Preferences: <textarea class="edt__pref">{{user.preferences}}</textarea>
-		Bio: <textarea class="edt__bio"></textarea>
-		<button class="btn btn__discard">Discard Changes</button>
-		<button class="btn btn__save">Save Changes</button>
 	</template>
 
 </div>
