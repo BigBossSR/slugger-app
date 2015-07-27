@@ -38,23 +38,26 @@
 		<div id="signin">
 			<div class="close"><a href="#">x</a></div>
 			<h2>Login</h2>
-			Email:
-			<input type="email" id="loginEmail" autocomplete="o">
-			Password:
+			Email:<br>
+			<input type="email" id="loginEmail" autocomplete="o"><br>
+			Password:<br>
 			<input type="password" id="loginPassword">
 			<button type="button" class="btn btn__login">Log In</button>
 			<h2>...or Register a Slug</h2>
-			Username:
-			<input type="text" id="register-username">
-			Password:
-			<input type="password" id="register-password">
-			Email:
-			<input type="email" id="register-email">
-			First Name:
-			<input type="text" id="register-firstname">
-			Last Name:
-			<input type="text" id="register-lastname">
-			<button type="button" class="btn btn__register">Register</button>
+			<div id="register-box">
+				Username:
+				<input type="text" id="register-username">
+				Password:
+				<input type="password" id="register-password">
+				Email:
+				<input type="email" id="register-email">
+				First Name:
+				<input type="text" id="register-firstname">
+				Last Name:
+				<input type="text" id="register-lastname">
+				Driver? <input type="checkbox" id="register-driver">
+				<button type="button" class="btn btn__register">Register</button>
+			</div>
 		</div>
 		<div id="edit-user"></div>
 	</div>
@@ -115,23 +118,25 @@
 		<div class="prof__close">X</div>
 		<div class="name-box">
 				<div class="prof prof__name">{{first_name}}</div>
-				<input type="text" class="edt edt__name" value="{{first_name}}">
+				<input type="text" class="edt edt__name" value="{{user.first_name}}">
 				<div class="prof prof__username">{{username}}</div>
-				<input type="text" class="edt edt__username" value="{{username}}">
+				<input type="text" class="edt edt__username" value="{{user.username}}">
+				<button class="prof btn prof__btn">Invite</button>
 		</div>
 		<div class="addr-box">
 				<div class="prof">🏠 {{home_locale}}</div>
-				<span class="edt">🏠 <input class="edt__home" type="text" value="{{home_locale}}"></span>
+				<span class="edt">🏠 <input class="edt__home" type="text" value="{{itinerary.home_locale}}"></span>
 				<div class="prof">🏢 {{work_locale}}</div>
-				<span class="edt">🏢 <input class="edt__work" type="text" value="{{work_locale}}"></span>
+				<span class="edt">🏢 <input class="edt__work" type="text" value="{{itinerary.work_locale}}"></span>
 		</div>
-		<div><span class="prof">☀ {{morning_time}} 🌙 {{evening_time}}</span>
-			<span class="edt">☀ <input class="edt__am" type="text" value="{{morning_time}}"> </span>
-			<span class="edt">🌙 <input class="edt__pm" type="text" value="{{evening_time}}"></span>
+		<div><span class="prof">☀ {{morning_converted}} 🌙 {{evening_converted}}</span>
+			<span class="edt">☀ <input class="edt__am" type="text" value="{{itinerary.morning_converted}}"> </span>
+			<span class="edt">🌙 <input class="edt__pm" type="text" value="{{itinerary.evening_converted}}"></span>
 		</div>
+		<div class="edt">Driver? <input type="checkbox" id="edt-driver"></div>
 		<div>
 			<span class="prof">Preferences: {{preferences}} Bio: {{bio}}</span>
-			 <textarea class="edt edt__pref">{{preferences}}</textarea>
+			 <textarea class="edt edt__pref">{{user.preferences}}</textarea>
 			<textarea class="edt edt__bio"></textarea>
 		</div>
 		<button class="edt btn btn__discard">Discard Changes</button>

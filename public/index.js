@@ -25,6 +25,23 @@ var userViewsArray = []
 
 var rootUrl = "https://sluggr-api.herokuapp.com"
 
+var convertTime = function(timeString) {
+	
+	var d = new Date(timeString)
+	var h = d.getUTCHours()
+	var m = d.getUTCMinutes()
+	var convertedTime
+	if (h > 12) {
+		convertedTime = (h-12)+":"+m+" PM"
+	}
+	else if (h === 0) {
+		convertedTime = "12:"+m+" AM"
+	} else {
+		convertedTime = h+":"+m+" AM"
+	}
+	return convertedTime
+}
+
 var initializeMap = function() {
     var mapOptions = {
 		center: { lat: 38.899, lng: -77.015},
@@ -44,14 +61,19 @@ var closeViewOnEsc = function(e) {
 
 //test this when server is up
 var populateList = function(){
+	var emailString = "a@b.com"
+	if (app.CurrentUser) {
+		emailString = app.CurrentUser.user.email
+	}
 
 	$.ajax(rootUrl+"/demo_users", {
 		method: "GET",
+		headers: {
+				email: emailString
+			},
 		success: function(json) {
 			app.myUsers.reset()
 			app.dispatcher.trigger("reset")
-
-
 
 			var userList = json.user
 

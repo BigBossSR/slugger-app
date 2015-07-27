@@ -12,7 +12,7 @@ app.Views.User = Backbone.View.extend({
 
 		if ( this.$el.find(":checkbox:checked").length > 0 ) {
 			
-
+			//cycle through an arbitrary array of colors to vary user pins
 			//this will break if too many pins
 			homeMarker.icon.fillColor = pinColors[activePins]
 			workMarker.icon.fillColor = pinColors[activePins]
@@ -65,8 +65,11 @@ app.Views.User = Backbone.View.extend({
 		})
 
 		if (userModel) {
+			//give user converted times here or on model
 			app.profileView.render(userModel)
 		}
+
+		$(".edt__username").focus()
 	},
 
 	template: Handlebars.compile( $("#userlist-template").html() ),
@@ -81,9 +84,30 @@ app.Views.Profile = Backbone.View.extend({
 		"click .btn__discard" : "discardChanges",
 		"click .btn__save" : "saveEdits",
 		"keyup" : "exitCheck",
+		"click .prof__btn": "sendInvite",
+	},
+
+	sendInvite: function(){
+		var email = this.model.get("email")
+
+		console.log("contact "+this.model.get("username")+"?")
+
+		$.ajax(rootUrl+"/", {
+			method: "",
+			headers: {
+				email: app.CurrentUser.user.email
+			},
+			data: {
+				email: email
+			},
+			success: function() {
+
+			}
+		})
 	},
 
 	initialize: function(){
+		//DISUSED I believe
 		this.listenTo(app.dispatcher, "close", function(){
 			this.hide()
 		} )
@@ -94,8 +118,8 @@ app.Views.Profile = Backbone.View.extend({
 	},
 
 	render: function(model) {
-		console.log(model)
 		this.$el.html( this.template(model.toJSON() ) )
+		this.model = model
 	},
 
 	hide: function() {
@@ -113,6 +137,7 @@ app.Views.Profile = Backbone.View.extend({
 			app.CurrentUser.itinerary.evening_time = $(".edt__pm").val(),
 			app.CurrentUser.user.preferences = $(".edt__pref").val(),
 			app.CurrentUser.user.bio = $(".edt__bio").val(),
+
 		
 
 		//app.CurrentUser.save()

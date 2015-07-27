@@ -13,6 +13,11 @@ app.Routers.MainRouter = Backbone.Router.extend({
 		$("#signin").slideUp()
 		$("#edit-user").slideUp()
 		$(".view-container").fadeOut()
+
+		//clear map
+		initializeMap()
+		activePins = 0
+		//uncheck checkboxes
 	},
 
 	//currently unused
@@ -40,10 +45,12 @@ app.Routers.MainRouter = Backbone.Router.extend({
 	edit: function() {
 		$(".view-container").fadeIn()
 		$("#user-focus").slideDown()
-		var userId = app.CurrentUser.user.email
+/*		var userId = app.CurrentUser.user.email
 		var userModel = app.myUsers.find(function(user){
 			return user.get("email") === userId
-		})
+		})*/
+		var userModel = new User(app.CurrentUser)
+		console.log(userModel)
 		app.profileView.render(userModel)
 		$(".prof").hide()
 		$(".edt").show()

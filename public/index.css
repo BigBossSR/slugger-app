@@ -66,6 +66,7 @@ a {
 	display: inline-block;
 	font-size: 1rem;
 	font-family: monospace;
+	overflow: hidden; /*but really what i want is probably logo to be absolute and cover this */
 }
 
 .input-box {
@@ -121,6 +122,10 @@ a {
 #signin {
 	background-color: rgb(27, 153, 153);
 	color: white;
+}
+
+#register-box{
+	display: hidden;
 }
 
 .edt {
