@@ -4,13 +4,35 @@ var app = {
 	Views: {},
 	Routers: {}
 }
-
+var map
 var loggedIn
 var morning
+var activePins = 0
+var pinColors = [
+	"green",
+	"blue",
+	"orange",
+	'yellow',
+	'silver',
+	'purple',
+	'brown',
+	'teal',
+	'pink',
+]
+
 //currently disused
 var userViewsArray = []
 
 var rootUrl = "https://sluggr-api.herokuapp.com"
+
+var initializeMap = function() {
+    var mapOptions = {
+		center: { lat: 38.899, lng: -77.015},
+    	zoom: 10
+    };
+	map = new google.maps.Map( document.getElementById('map-canvas'), mapOptions);
+}
+google.maps.event.addDomListener(window, 'load', initializeMap)
 
 var closeViewOnEsc = function(e) {
 	if (e.keyCode === 27) {

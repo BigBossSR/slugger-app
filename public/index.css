@@ -19,12 +19,19 @@ a {
 	height: 15vh;
 	box-shadow: 3px 3px 3px black;
 	position: relative;
+	z-index: 99;
 }
 
-.map-container {
+#map-container {
 	display: inline-block;
 	width: 67%;
 	height: 85vh;
+}
+
+#map-canvas {
+	width: 100%;
+	height: 100%;
+	z-index: 0;
 }
 
 .right-sidebar {
@@ -93,6 +100,7 @@ a {
 	position: absolute;
 	background-color: RGBA(0,0,0,.7);
 	display: none;
+	z-index: 100;
 }
 
 #user-focus, #signin, #edit-user {

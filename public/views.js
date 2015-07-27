@@ -2,7 +2,31 @@ app.Views.User = Backbone.View.extend({
 	className: "user",
 
 	events: {
-		"click": "viewUser",
+		"click .usr-detail": "viewUser",
+		"click :checkbox": "togglePins",
+	},
+
+	togglePins: function(){
+		var homeMarker = this.model.get("home_marker")
+		var workMarker = this.model.get("work_marker")
+
+		if ( this.$el.find(":checkbox:checked").length > 0 ) {
+			
+
+			//this will break if too many pins
+			homeMarker.icon.fillColor = pinColors[activePins]
+			workMarker.icon.fillColor = pinColors[activePins]
+			activePins+=1	
+			homeMarker.setMap(map)
+			workMarker.setMap(map)
+		} else {
+			activePins-=1
+			homeMarker.icon.fillColor = "none"
+			workMarker.icon.fillColor = "none"
+			homeMarker.setMap(null)
+			workMarker.setMap(null)
+		}
+		
 	},
 
 	initialize: function(){

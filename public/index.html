@@ -60,13 +60,14 @@
 	</div>
 
 
-	<div class="map-container">
-		<iframe
+	<div id="map-container">
+		<div id ="map-canvas"></div>
+<!-- 		<iframe
 			 width="100%"
 			 height="100%"
 			 frameborder="0" style="border:0"
 			 src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCqUON2u3RClI42Sh-50zz3NiWf0ZigDYA&q=Washington,DC" allowfullscreen>
-		</iframe>
+		</iframe> -->
 
 	</div>
 
@@ -95,8 +96,13 @@
 
 
 	<template id="userlist-template">
+		
 		<tr>
-			<td class="user-name usr-detail">{{first_name}} <span>{{#if driver}}🚘{{else}}🚶{{/if}}</span></td>
+			<td>
+				<input type="checkbox"/>
+				<span  class="user-name usr-detail">{{first_name}}</span>
+				<span class="usr-detail">{{#if driver}}🚘{{else}}🚶{{/if}}</span>
+			</td>
 			<td class="score usr-detail">{{score}}</div></td>
 			<td class="time usr-detail">{{time}}</div></td>
 		</tr>
@@ -138,6 +144,7 @@
 
 </div>
 
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC1Bg5F-ZvDUBfC8EvVBvsAqklwuQiQHlw"></script>
 <script src="index.js"></script>
 <script src="models.js"></script>
 <script src="collections.js"></script>

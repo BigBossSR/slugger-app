@@ -1,8 +1,34 @@
 var User = Backbone.Model.extend({
 
 	initialize: function() {
-//this will need updating if tables change
+		//set an unplaced Google Map marker
+		var homeLatLng = new google.maps.LatLng(this.get("home_lat"), this.get("home_lng") )
+		var workLatLng = new google.maps.LatLng( this.get("work_lat"), this.get("work_lng") )
 
+		var homeMarker = new google.maps.Marker({
+			position: homeLatLng,
+			icon: {
+				path: google.maps.SymbolPath.CIRCLE,
+				scale: 8,
+				fillOpacity: .8,
+				strokeWeight: 2,
+			}
+		})
+
+		var workMarker = new google.maps.Marker({
+			position: workLatLng,
+				icon: {
+				path: google.maps.SymbolPath.CIRCLE,
+				scale: 8,
+				fillOpacity: .8,
+				strokeWeight: 2,
+			}
+		})
+
+		this.set("home_marker", homeMarker)
+		this.set("work_marker", workMarker)
+
+//this will need updating if tables change
 		if (morning) {
 			this.set({
 				depart: this.get("home_locale"),
