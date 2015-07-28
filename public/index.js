@@ -20,15 +20,42 @@ var pinColors = [
 	'pink',
 ]
 
+var currentUserEmail
+
 //currently disused
 var userViewsArray = []
 
 var rootUrl = "https://sluggr-api.herokuapp.com"
 
+var viewProfile =  function(modelParam, collectionParam){
+	$(".view-container").fadeIn()
+	$(".edt").hide()
+	$(".prof").show()
+	$("#user-focus").slideDown()
+	//finds the model of the clicked view, to populate the profile view
+	var userId = modelParam.get("email")
+	var userModel = collectionParam.find(function(user){
+		return user.get("email") === userId
+	})
+
+	if (userModel) {
+		app.profileView.render(userModel)
+	}
+}
+
+var setCurrentUser = function(jsonData){
+	app.CurrentUser = jsonData
+	currentUserEmail = jsonData.user.email
+	console.log(jsonData)
+	formGroup()
+}
+
 var formGroup = function(){
+
 	//create a new group for the user
 	if (app.carpool){
 		app.carpool.reset()
+		//temp disabled to check about disappearing group lists
 	} else {
 		app.carpool = new app.Collections.Group()
 	}
@@ -42,12 +69,10 @@ var formGroup = function(){
 			_.each(app.carpool.models, function(model){
 				model.initialize()
 				var view = new app.Views.GroupUser({model})
-				view.render() 
+				view.render()
+				//revist togglePins function to show markers
 			})
 		}) 
-		//each will become a user model, and need a view
-			//render each
-		//create a new view
 		
 		.error( function(error){
 			console.log(error)
@@ -147,9 +172,11 @@ var populateList = function(){
 $(document).on("ready", function(){
 	app.dispatcher = _.clone(Backbone.Events)
 
+
 	app.profileView = new app.Views.Profile()
 	app.signinView = new app.Views.Signin()
 	app.editView = new app.Views.EditUser()
+	app.groupView = new app.Views.GroupPanel()
 	
 	app.myUsers = new app.Collections.UserList
 

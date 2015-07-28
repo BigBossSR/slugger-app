@@ -9,9 +9,19 @@ app.Routers.MainRouter = Backbone.Router.extend({
 
 	viewUserList: function() {
 		if (app.CurrentUser) {
+			//display options for logged in or anonymous
 			$(".anon").hide()
 			$(".lgd").show()
+			//group display options if driver
+			if (app.CurrentUser.user.driver){
+				$(".leave").hide()
+				$(".disband").show()
+			} else {
+				$(".leave").show()
+				$(".disband").hide()
+			}
 		}
+
 		populateList()
 		$("#signin").slideUp()
 		$("#edit-user").slideUp()
@@ -64,5 +74,6 @@ app.Routers.MainRouter = Backbone.Router.extend({
 		} else {
 			$("#edt__driver").prop("checked", false)
 		}
+		$(".edt__username").focus()
 	},
 })

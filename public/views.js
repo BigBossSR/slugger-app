@@ -39,7 +39,7 @@ app.Views.User = Backbone.View.extend({
 			this.updateView(this.model) 
 		})
 		this.listenTo(app.dispatcher, "reset", function(){
-			console.log("reset")
+			console.log("reset user view")
 			this.remove()
 		})
 
@@ -58,25 +58,7 @@ app.Views.User = Backbone.View.extend({
 
 //open a user profile
 	viewUser: function() {
-		$(".view-container").fadeIn()
-		$(".edt").hide()
-		$(".prof").show()
-		$("#user-focus").slideDown()
-		//finds the model of the clicked view, to populate the profile view
-		var userId = this.model.get("email")
-		var userModel = app.myUsers.find(function(user){
-			return user.get("email") === userId
-		})
-
-		if (userModel) {
-			//give user converted times here or on model
-				//need a new mode for current user
-					//apply the time conversions
-					//move a LOT of this functionality there
-			app.profileView.render(userModel)
-		}
-
-		$(".edt__username").focus()
+		viewProfile(this.model, this.model.collection)
 	},
 
 	template: Handlebars.compile( $("#userlist-template").html() ),
@@ -90,8 +72,15 @@ app.Views.GroupUser = Backbone.View.extend({
 		"click .grp__info" : "viewGroupMember"
 	},
 
+	initialize: function(){
+		this.listenTo(this.model.collection, "reset", function(){
+			console.log("group reset")
+			this.remove()
+		})
+	},
+
 	viewGroupMember: function(){
-		console.log(this.model)
+		viewProfile(this.model, this.model.collection)
 	},
 
 	render: function(model){
@@ -101,8 +90,9 @@ app.Views.GroupUser = Backbone.View.extend({
 
 		$("#group-location").append( this.$el )
 	},
+	
+	template: Handlebars.compile( $("#group-template").html() ),
 
-	template: Handlebars.compile( $("#group-template").html() )
 })
 
 
@@ -123,7 +113,7 @@ app.Views.Profile = Backbone.View.extend({
 		$.ajax(rootUrl+"/invite", {
 			method: "GET",
 			headers: {
-				email: app.CurrentUser.user.email
+				email: currentUserEmail
 			},
 			data: {
 				rider_id: inviteId
@@ -175,14 +165,11 @@ app.Views.Profile = Backbone.View.extend({
 				app.CurrentUser.user.driver = false
 			}
 
-
-		
-
 		//app.CurrentUser.save()
 		$.ajax(rootUrl + "/demo_user/edit",{
 			method: "PUT",
 			headers: {
-				email: app.CurrentUser.user.email,
+				email: currentUserEmail,
 			},
 			data: app.CurrentUser,
 		}).success(function(data) {
@@ -191,12 +178,6 @@ app.Views.Profile = Backbone.View.extend({
 		}).error(function(error){
 			console.log("error updating", error)
 		})
-		/*headers: {
-			email: app.CurrentUser.email
-		},
-		data: {
-
-		},*/
 
 	},
 
@@ -236,15 +217,14 @@ app.Views.Signin = Backbone.View.extend({
 			success( function(json) {
 				console.log(json)
 				//go through "users" to find a match
-				app.CurrentUser = json
+				
 
 				if (json.error) {
 					alert(json.error)
 					return
 				}
 
-				formGroup()
-
+				setCurrentUser(json)
 				app.router.navigate("", {trigger: true})
 			}
 		).error(function (error){
@@ -266,8 +246,7 @@ app.Views.Signin = Backbone.View.extend({
 			},
 		}).success( function(data){
 			console.log("success", data)
-			app.CurrentUser = data
-			formGroup()
+			setCurrentUser(data)
 			app.router.navigate("", {trigger: true})
 			
 		}).error( function(error){
@@ -292,8 +271,38 @@ app.Views.EditUser = Backbone.View.extend({
 		this.$el.html( this.template( app.CurrentUser ) )
 	},
 
-	
-
 	template: Handlebars.compile( $("#edit-user-template").html() ),
+
+})
+
+app.Views.GroupPanel = Backbone.View.extend({
+	el: document.getElementsByClassName("group-box"),
+
+	events: {
+		"click .disband":"disbandGroup",
+		"click .leave": "leaveGroup",
+	},
+
+	leaveGroup: function(){
+		$.ajax(rootUrl+"/group/leave", {
+			method: "PUT",
+			headers: {email: currentUserEmail},
+		})
+			.success( function(data){
+				console.log("group left")
+				app.carpool.reset()
+			})
+	},
+
+	disbandGroup: function(){
+		$.ajax(rootUrl+"/group/disband", {
+			method: "DELETE",
+			headers: {email: currentUserEmail},
+		})
+			.success( function(data){
+				console.log("group disbanded")
+				app.carpool.reset()
+			})
+	},
 
 })

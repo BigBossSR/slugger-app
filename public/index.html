@@ -3,6 +3,7 @@
 <head>
 	<title>Get Your Slug On!</title>
 	<link rel="stylesheet" type="text/css" href="index.css">
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
 
 	<script src="libs/jquery.js"></script>
 	<script src="libs/underscore.js"></script>
@@ -39,7 +40,7 @@
 			<div class="close"><a href="#">x</a></div>
 			<h2>Login</h2>
 			Email:<br>
-			<input type="email" id="loginEmail" autocomplete="o"><br>
+			<input type="email" id="loginEmail" autocomplete="true"><br>
 			Password:<br>
 			<input type="password" id="loginPassword">
 			<button type="button" class="btn btn__login">Log In</button>
@@ -96,13 +97,18 @@
 			<div class="lgd group-box">
 				<div class="sidebar-title">My Carpool</div>
 				<div id="group-location"></div>
-				<button class="btn disband">Disband Group</button>
+				<button class="drvr btn disband">Disband Group</button>
+				<button class="rdr btn leave">Leave Group</button>
 			</div>
 		</div>
 
 		<div class="user-list">
 			<table id="user-location"></table>
 		</div>
+	</div>
+
+	<div id="footer-bar">
+	 A Scirk Production
 	</div>
 </div>
 
@@ -112,8 +118,8 @@
 	<tr>
 		<td>
 			<input type="checkbox"/>
-			<span  class="user-name usr-detail">{{first_name}}</span>
 			<div class="pin-color usr-detail"></div>
+			<span  class="user-name usr-detail">{{first_name}}</span>
 			<span class="usr-detail">{{#if driver}}🚘{{else}}🚶{{/if}}</span>
 		</td>
 		<td class="score usr-detail">{{score}}</div></td>
