@@ -7,3 +7,14 @@ app.Collections.UserList=Backbone.Collection.extend({
 	url: rootUrl + "/demo_users",
 	//url: "/users",
 })
+
+app.Collections.Group = Backbone.Collection.extend({
+	model: User,
+
+	url: rootUrl+"/group",
+
+	parse: function(response) {
+			return response.group
+	}
+
+})

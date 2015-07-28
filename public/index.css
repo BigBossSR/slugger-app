@@ -34,7 +34,7 @@ a {
 	z-index: 0;
 }
 
-.right-sidebar {
+#right-sidebar {
 	display: inline-block;
 	width: 33%;
 	background: RGB(24, 138, 138);
@@ -69,8 +69,22 @@ a {
 	overflow: hidden; /*but really what i want is probably logo to be absolute and cover this */
 }
 
-.input-box {
+.anon{
+
+}
+
+.lgd {
+	display: none;
+}
+
+#sidebar-top {
 	height: 35vh;
+}
+
+.input-box, .group-box {
+	padding: 10px;
+	overflow: scroll;
+	height: 100%;
 }
 
 .sidebar-title {
@@ -93,6 +107,13 @@ a {
 .usr-detail {
 	display: inline-block;
 	color: black;
+}
+
+.pin-color {
+	display: none;
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
 }
 
 .view-container {

@@ -10,21 +10,25 @@ app.Views.User = Backbone.View.extend({
 		var homeMarker = this.model.get("home_marker")
 		var workMarker = this.model.get("work_marker")
 
-		if ( this.$el.find(":checkbox:checked").length > 0 ) {
-			
+		if ( this.$el.find(":checkbox:checked").length > 0 ) {	
 			//cycle through an arbitrary array of colors to vary user pins
 			//this will break if too many pins
 			homeMarker.icon.fillColor = pinColors[activePins]
-			workMarker.icon.fillColor = pinColors[activePins]
-			activePins+=1	
+			workMarker.icon.fillColor = pinColors[activePins]	
 			homeMarker.setMap(map)
 			workMarker.setMap(map)
+			//show an el with same bg color as the marker 
+			this.$el.find(".pin-color").fadeIn()
+			this.$el.find(".pin-color").css( {"background-color": pinColors[activePins],
+				"display": "inline-block"} )
+			activePins+=1
 		} else {
 			activePins-=1
 			homeMarker.icon.fillColor = "none"
 			workMarker.icon.fillColor = "none"
 			homeMarker.setMap(null)
 			workMarker.setMap(null)
+			this.$el.find(".pin-color").fadeOut()
 		}
 		
 	},
@@ -66,6 +70,9 @@ app.Views.User = Backbone.View.extend({
 
 		if (userModel) {
 			//give user converted times here or on model
+				//need a new mode for current user
+					//apply the time conversions
+					//move a LOT of this functionality there
 			app.profileView.render(userModel)
 		}
 
@@ -73,6 +80,29 @@ app.Views.User = Backbone.View.extend({
 	},
 
 	template: Handlebars.compile( $("#userlist-template").html() ),
+})
+
+app.Views.GroupUser = Backbone.View.extend({
+
+	className: "group-member",
+
+	events: {
+		"click .grp__info" : "viewGroupMember"
+	},
+
+	viewGroupMember: function(){
+		console.log(this.model)
+	},
+
+	render: function(model){
+		modelData = this.model.toJSON()
+
+		this.$el.html( this.template(modelData) )
+
+		$("#group-location").append( this.$el )
+	},
+
+	template: Handlebars.compile( $("#group-template").html() )
 })
 
 
@@ -88,22 +118,23 @@ app.Views.Profile = Backbone.View.extend({
 	},
 
 	sendInvite: function(){
-		var email = this.model.get("email")
-
-		console.log("contact "+this.model.get("username")+"?")
-
-		$.ajax(rootUrl+"/", {
-			method: "",
+		var inviteId = this.model.get("id")
+		console.log(this.model)
+		$.ajax(rootUrl+"/invite", {
+			method: "GET",
 			headers: {
 				email: app.CurrentUser.user.email
 			},
 			data: {
-				email: email
-			},
-			success: function() {
-
+				rider_id: inviteId
 			}
 		})
+			.success( function(data) {
+				formGroup()
+			})
+			.error( function(error) {
+				console.log(error)
+			})
 	},
 
 	initialize: function(){
@@ -136,7 +167,14 @@ app.Views.Profile = Backbone.View.extend({
 			app.CurrentUser.itinerary.morning_time = $(".edt__am").val(),
 			app.CurrentUser.itinerary.evening_time = $(".edt__pm").val(),
 			app.CurrentUser.user.preferences = $(".edt__pref").val(),
-			app.CurrentUser.user.bio = $(".edt__bio").val(),
+			app.CurrentUser.user.bio = $(".edt__bio").val()
+			
+			if ( this.$el.find(":checkbox:checked").length > 0 ){
+				app.CurrentUser.user.driver = true	
+			} else {
+				app.CurrentUser.user.driver = false
+			}
+
 
 		
 
@@ -204,7 +242,9 @@ app.Views.Signin = Backbone.View.extend({
 					alert(json.error)
 					return
 				}
-			
+
+				formGroup()
+
 				app.router.navigate("", {trigger: true})
 			}
 		).error(function (error){
@@ -227,6 +267,7 @@ app.Views.Signin = Backbone.View.extend({
 		}).success( function(data){
 			console.log("success", data)
 			app.CurrentUser = data
+			formGroup()
 			app.router.navigate("", {trigger: true})
 			
 		}).error( function(error){

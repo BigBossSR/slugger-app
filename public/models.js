@@ -11,7 +11,7 @@ var User = Backbone.Model.extend({
 				path: google.maps.SymbolPath.CIRCLE,
 				scale: 8,
 				fillOpacity: .8,
-				strokeWeight: 2,
+				strokeWeight: 1,
 			}
 		})
 
@@ -21,7 +21,7 @@ var User = Backbone.Model.extend({
 				path: google.maps.SymbolPath.CIRCLE,
 				scale: 8,
 				fillOpacity: .8,
-				strokeWeight: 2,
+				strokeWeight: 1,
 			}
 		})
 
@@ -30,7 +30,7 @@ var User = Backbone.Model.extend({
 		var convertedMorning = convertTime(this.get("morning_time") )
 		var convertedEvening = convertTime(this.get("evening_time") )
 		this.set("morning_converted", convertedMorning)
-		this.set("evening_converted", convertTime)
+		this.set("evening_converted", convertedEvening)
 //this will need updating if tables change
 	//also this is probably superfluous and could be handled with HBars conditionals
 		if (morning) {

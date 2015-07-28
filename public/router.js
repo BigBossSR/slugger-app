@@ -8,7 +8,10 @@ app.Routers.MainRouter = Backbone.Router.extend({
 	},
 
 	viewUserList: function() {
-		console.log("yo")
+		if (app.CurrentUser) {
+			$(".anon").hide()
+			$(".lgd").show()
+		}
 		populateList()
 		$("#signin").slideUp()
 		$("#edit-user").slideUp()
@@ -49,10 +52,17 @@ app.Routers.MainRouter = Backbone.Router.extend({
 		var userModel = app.myUsers.find(function(user){
 			return user.get("email") === userId
 		})*/
+
+//need a current user model, bc this is carrying chuff
 		var userModel = new User(app.CurrentUser)
 		console.log(userModel)
 		app.profileView.render(userModel)
 		$(".prof").hide()
 		$(".edt").show()
+		if (app.CurrentUser.user.driver){
+			$("#edt__driver").prop("checked", true)
+		} else {
+			$("#edt__driver").prop("checked", false)
+		}
 	},
 })
