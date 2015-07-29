@@ -13,13 +13,6 @@ app.Routers.MainRouter = Backbone.Router.extend({
 			$(".anon").hide()
 			$(".lgd").show()
 			//group display options if driver
-			if (app.CurrentUser.user.driver){
-				$(".leave").hide()
-				$(".disband").show()
-			} else {
-				$(".leave").show()
-				$(".disband").hide()
-			}
 		}
 
 		populateList()

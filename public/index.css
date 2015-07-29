@@ -6,7 +6,12 @@
 
 a {
 	text-decoration: none;
-	color: black;
+	color: cornflowerblue;
+	text-shadow: .04em .04em  darkslategray;
+}
+
+.col {
+	display: inline-block;
 }
 
 .page-container {
@@ -38,7 +43,8 @@ a {
 #right-sidebar {
 	display: inline-block;
 	width: 33%;
-	background: RGB(24, 138, 138);
+	/*background: RGB(24, 138, 138);*/
+	background: rgb(32, 97, 200);
 	color: white;
 	height: 85vh;
 	font-size: 1rem;
@@ -62,7 +68,15 @@ a {
 	font-size: 48px;
 	font-family: Trajan, monospace;
 	display: inline-block;
-	width: 33%;
+	position: absolute;
+	line-height: 12vh;
+	margin-top: 1vh;
+	margin-left: 2%;
+	white-space: nowrap;
+}
+
+#logo {
+	vertical-align: top;
 }
 
 #logo-img {
@@ -76,9 +90,11 @@ a {
 
 .menu-links {
 	display: inline-block;
-	font-size: 1rem;
+	font-size: 1.15rem;
 	font-family: monospace;
-	overflow: hidden; /*but really what i want is probably logo to be absolute and cover this */
+	float: right;
+	margin-top: 5vh;
+    margin-right: 6.5%;
 }
 
 .anon{
@@ -91,6 +107,7 @@ a {
 
 #sidebar-top {
 	height: 35vh;
+	position: relative;
 }
 
 .input-box, .group-box {
@@ -100,34 +117,62 @@ a {
 }
 
 .group-box {
-	background: rgb(59, 169, 169);
+	/*background: rgb(59, 169, 169);*/
 	margin: 0 20px;
 }
 
 .drvr, .rdr {
 	display: none;
 }
+
+.button-container {
+	position: absolute;
+    bottom: 3%;
+    left: 50%;
+    transform: TranslateX(-50%);
+}
+
 .sidebar-title {
 	text-align: center;
-	font-size: 28	px;
+	font-size: 28px;
 }
 
 .user-list {
 	border-radius: 15px 15px 0 0 ;
 	background-color: rgba(255,255,255,.8);
-	padding: 5px;
+	padding: 5px 4%;
 	overflow: scroll;
 	height: 50vh;
+	color: black;
+}
+
+#user-location{
+	padding-bottom: 3vh;
 }
 
 .user {
-	cursor: pointer;
-	font-family: "Open Sans Condensed"
+    cursor: pointer;
+    font-family: "Open Sans Condensed";
+    border-bottom: solid 1px RGB(24, 138, 138);
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+}
+
+.usr__info {
+	display: inline-block;
+	width: 29%;
+	white-space: nowrap;
+}
+
+.usr__locs {
+	display: inline-block;
+	width: 69%;
+	text-align: right;
+	white-space: nowrap;
 }
 
 .usr-detail {
 	display: inline-block;
-	color: black;
 }
 
 .time {
@@ -166,7 +211,8 @@ a {
 }
 
 #signin {
-	background-color: rgb(27, 153, 153);
+	/*background-color: rgb(27, 153, 153);*/
+	background: rgb(32, 97, 200);
 	color: white;
 }
 
@@ -200,14 +246,15 @@ a {
 }
 
 
-
-
 .btn {
-	padding: 3px;
-	background-color: rgb(59, 169, 169);
-	font-size: 14px;
-	vertical-align: middle;
-
+	/*background-color: rgb(59, 169, 169);*/
+	background-color: cornflowerblue;
+    font-size: 14px;
+    vertical-align: middle;
+    font-family: Tahoma;
+    color: white;
+    padding: 3px 5px;
+    margin-top: 1.5%;
 }
 
 

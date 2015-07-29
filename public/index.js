@@ -72,6 +72,15 @@ var formGroup = function(){
 				view.render()
 				//revist togglePins function to show markers
 			})
+			if (app.carpool.length > 0) {
+				if (app.CurrentUser.user.driver){
+					$(".leave").hide()
+					$(".disband").show()
+				} else {
+					$(".leave").show()
+					$(".disband").hide()
+				}
+			}
 		}) 
 		
 		.error( function(error){

@@ -16,17 +16,17 @@
 
 	<div class="header">
 		<div class="logo-box"><a href="#">
-			<span>SLUGGR</span>
+			<span id="logo">SLUGGR</span>
 			<div id="logo-img"></div>
 			</a>
 		</div>
 		<div class="menu-links">
 			<span class="anon">
-				<a href="#signin">Register / Login</a>
+				<a href="#signin">Register/Login</a> | 
 				<a href="#">Get Started!</a>
 			</span>
 			<span class="lgd">
-				<a href="#edit-profile">My Profile</a>
+				<a href="#edit-profile">My Profile</a> | 
 				<a href="#">My Rideshares</a>
 			</span>
 
@@ -43,21 +43,29 @@
 			<input type="email" id="loginEmail" autocomplete="true"><br>
 			Password:<br>
 			<input type="password" id="loginPassword">
-			<button type="button" class="btn btn__login">Log In</button>
+			<div class="row">
+				<button type="button" class="btn btn__login">Log In</button>
+			</div>
 			<h2>...or Register a Slug</h2>
 			<div id="register-box">
-				Username:
-				<input type="text" id="register-username">
-				Password:
-				<input type="password" id="register-password">
-				Email:
-				<input type="email" id="register-email">
-				First Name:
-				<input type="text" id="register-firstname">
-				Last Name:
-				<input type="text" id="register-lastname">
-				Driver? <input type="checkbox" id="register-driver">
-				<button type="button" class="btn btn__register">Register</button>
+				<div class="col">
+					<div class="row">Email:</div>
+					<div class="row"><input type="email" id="register-email"></div>
+					<div class="row">Password:</div>
+					<div class="row"><input type="password" id="register-password"></div>
+				</div>
+				<div class="col">
+					<div class="row">First Name:</div>
+					<div class="row"><input type="text" id="register-firstname"></div>
+					<div class="row">Username:</div>
+					<div class="row"><input type="text" id="register-username"></div>
+				</div>
+				<div class="row">
+					Driver? <input type="checkbox" id="register-driver">
+				</div>
+				<div class="row">
+					<button type="button" class="btn btn__register">Register</button>
+				</div>
 			</div>
 		</div>
 		<div id="edit-user"></div>
@@ -96,14 +104,17 @@
 
 			<div class="lgd group-box">
 				<div class="sidebar-title">My Carpool</div>
+				
 				<div id="group-location"></div>
-				<button class="drvr btn disband">Disband Group</button>
-				<button class="rdr btn leave">Leave Group</button>
+				<div class="button-container">
+					<button class="drvr btn disband">Disband Group</button>
+					<button class="rdr btn leave">Leave Group</button>
+				</div>
 			</div>
 		</div>
 
 		<div class="user-list">
-			<table id="user-location"></table>
+			<div id="user-location"></div>
 		</div>
 	</div>
 
@@ -115,19 +126,28 @@
 
 <template id="userlist-template">
 	
-	<tr>
-		<td>
+	<div class="usr__info">
+		<div class="row">
 			<input type="checkbox"/>
 			<div class="pin-color usr-detail"></div>
 			<span  class="user-name usr-detail">{{first_name}}</span>
-			<span class="usr-detail">{{#if driver}}🚘{{else}}🚶{{/if}}</span>
-		</td>
-		<td class="score usr-detail">{{score}}</div></td>
-		<td class="time usr-detail">{{time}}</div></td>
-	</tr>
-	<tr>	
-		<td class="locations usr-detail">{{depart}} >>> {{dest}} </td>
-	</tr>
+		</div>
+		<div class="row">
+			<div class="usr-detail">{{#if driver}}🚘{{else}}🚶{{/if}}</div>
+			<div class="time usr-detail">{{time}}</div>
+
+		</div>
+	</div>
+	<div class="usr__locs usr-detail">
+		<div class="locations">
+		{{depart}} >
+		</div>
+		<div class="locations"> > {{dest}} </div>
+	</div>	
+
+		
+		
+
 </template>
 
 <template id="profile-template">
