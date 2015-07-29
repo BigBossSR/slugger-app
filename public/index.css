@@ -10,6 +10,10 @@ a {
 	text-shadow: .04em .04em  darkslategray;
 }
 
+textarea {
+	width: 49%;
+}
+
 .col {
 	display: inline-block;
 }

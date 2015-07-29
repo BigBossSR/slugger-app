@@ -15,7 +15,7 @@
 <div class="page-container">
 
 	<div class="header">
-		<div class="logo-box"><a href="#">
+		<div class="logo-box"><a href="#home">
 			<span id="logo">SLUGGR</span>
 			<div id="logo-img"></div>
 			</a>
@@ -37,7 +37,7 @@
 	<div class="view-container">
 		<div id="user-focus"></div>
 		<div id="signin">
-			<div class="close"><a href="#">x</a></div>
+			<div class="close"><a href="#home">x</a></div>
 			<h2>Login</h2>
 			Email:<br>
 			<input type="email" id="loginEmail" autocomplete="true"><br>
@@ -175,8 +175,8 @@
 	
 	<div>
 		<span class="prof">Preferences: {{preferences}} Bio: {{bio}}</span>
-		 <textarea class="edt edt__pref">{{user.preferences}}</textarea>
-		<textarea class="edt edt__bio"></textarea>
+		 <textarea rows="7" class="edt edt__pref">{{user.preferences}}</textarea>
+		<textarea rows="7" class="edt edt__bio">{{user.bio}}</textarea>
 	</div>
 	<button class="edt btn btn__discard">Discard Changes</button>
 	<button class="edt btn btn__save">Save Changes</button>

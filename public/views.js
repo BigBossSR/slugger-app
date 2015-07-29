@@ -125,6 +125,7 @@ app.Views.Profile = Backbone.View.extend({
 			.error( function(error) {
 				console.log(error)
 			})
+		this.hide()
 	},
 
 	initialize: function(){
@@ -146,6 +147,7 @@ app.Views.Profile = Backbone.View.extend({
 	hide: function() {
 		$(".view-container").fadeOut()
 		$("#user-focus").slideUp()
+		app.router.navigate("home", {trigger: true})
 	},
 
 	saveEdits: function(){
@@ -174,7 +176,7 @@ app.Views.Profile = Backbone.View.extend({
 			data: app.CurrentUser,
 		}).success(function(data) {
 			console.log("success updating", data)
-			app.router.navigate("", {trigger: true})
+			app.router.navigate("home", {trigger: true})
 		}).error(function(error){
 			console.log("error updating", error)
 		})
@@ -182,7 +184,7 @@ app.Views.Profile = Backbone.View.extend({
 	},
 
 	discardChanges: function(){
-		app.router.navigate("", {trigger: true})
+		app.router.navigate("home", {trigger: true})
 	},
 
 	template: Handlebars.compile( $("#profile-template").html() ),
@@ -225,7 +227,7 @@ app.Views.Signin = Backbone.View.extend({
 				}
 
 				setCurrentUser(json)
-				app.router.navigate("", {trigger: true})
+				app.router.navigate("home", {trigger: true})
 			}
 		).error(function (error){
 			
@@ -234,7 +236,6 @@ app.Views.Signin = Backbone.View.extend({
 	},
 
 	registerUser: function(){
-
 		$.ajax(rootUrl + "/demo_user/create", {
 			method: "POST",
 			data: {
@@ -247,7 +248,7 @@ app.Views.Signin = Backbone.View.extend({
 		}).success( function(data){
 			console.log("success", data)
 			setCurrentUser(data)
-			app.router.navigate("", {trigger: true})
+			app.router.navigate("edit-profile", {trigger: true})
 			
 		}).error( function(error){
 			console.log("error", error)
@@ -292,6 +293,8 @@ app.Views.GroupPanel = Backbone.View.extend({
 				console.log("group left")
 				app.carpool.reset()
 			})
+
+		$(".leave").hide()
 	},
 
 	disbandGroup: function(){
@@ -302,6 +305,9 @@ app.Views.GroupPanel = Backbone.View.extend({
 			.success( function(data){
 				console.log("group disbanded")
 				app.carpool.reset()
+				$(".disband").hide()
+				populateList()
+				initializeMap()
 			})
 	},
 

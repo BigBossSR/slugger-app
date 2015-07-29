@@ -24,8 +24,20 @@ var currentUserEmail
 
 //currently disused
 var userViewsArray = []
-
 var rootUrl = "https://sluggr-api.herokuapp.com"
+
+var showDrivers = function() {
+	//go through myUsers
+	app.myUsers.models = _.filter(app.myUsers.models, function(user) {
+		return user.get("driver") === true
+	})
+}
+
+var showRiders = function() {
+	app.myUsers.models = _.reject(app.myUsers.models, function(user) {
+		return user.get("driver") === true
+	})
+}
 
 var viewProfile =  function(modelParam, collectionParam){
 	$(".view-container").fadeIn()
@@ -66,14 +78,28 @@ var formGroup = function(){
 	})
 		.success( function(data){ 
 			console.log(data)
+			activePins=0
 			_.each(app.carpool.models, function(model){
 				model.initialize()
 				var view = new app.Views.GroupUser({model})
 				view.render()
-				//revist togglePins function to show markers
+				//drop pins for everyone but current user - needs DRYed
+				if (view.model.get("email") !== currentUserEmail) {
+					var homeMarker = view.model.get("home_marker")
+					var workMarker = view.model.get("work_marker")
+					
+					homeMarker.icon.fillColor = pinColors[activePins]
+					workMarker.icon.fillColor = pinColors[activePins]
+					
+					homeMarker.setMap(map)
+					workMarker.setMap(map)
+					activePins+=1
+				}
 			})
+			//show button if they have a carpool group
 			if (app.carpool.length > 0) {
-				if (app.CurrentUser.user.driver){
+				//if current user is owner let them disband
+				if (currentUserEmail === data.group[0].email){
 					$(".leave").hide()
 					$(".disband").show()
 				} else {
@@ -86,6 +112,7 @@ var formGroup = function(){
 		.error( function(error){
 			console.log(error)
 		})
+	populateList()
 }
 
 var convertTime = function(timeString) {
@@ -140,13 +167,11 @@ var closeViewOnEsc = function(e) {
 	if (e.keyCode === 27) {
 		//clear all nput fielders in signin
 		$(this.$el).find("input").val("")
-		app.router.navigate("", {trigger: true})
+		app.router.navigate("home", {trigger: true})
 	}
 }
 
-//test this when server is up
 var populateList = function(){
-	var emailString = "a@b.com"
 	if (app.CurrentUser) {
 		emailString = app.CurrentUser.user.email
 	}
@@ -156,6 +181,7 @@ var populateList = function(){
 		headers: {
 				email: emailString
 			},
+		//Consider moving this to a collection render method
 		success: function(json) {
 			//reset the user collection so it doesn't repeat
 			app.myUsers.reset()
@@ -166,6 +192,13 @@ var populateList = function(){
 			_.each(userList, function(item){
 			   app.myUsers.add(item) 
 			})
+
+			if (app.CurrentUser && app.CurrentUser.user.driver) {
+				showRiders()
+			} else {
+				showDrivers()
+			}
+
 			_.map(app.myUsers.models, function(model) {
 //TO DO: only generate a view if user is groupless				
 				var view = new app.Views.User({model})
@@ -213,6 +246,8 @@ $(document).on("ready", function(){
 	*/
 	app.router = new app.Routers.MainRouter()
 	Backbone.history.start()
+
+	app.router.navigate("signin", {trigger:true})
 	
 })
 
