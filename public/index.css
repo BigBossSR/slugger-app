@@ -233,6 +233,11 @@ textarea {
 	color: navy;
 }
 
+.sun-emoji {
+	color: yellow;
+    text-shadow: 1px 1px 1px orange;
+}
+
 .prof__username, .edt__username {
 	color: gray;
 	font-style: italic;

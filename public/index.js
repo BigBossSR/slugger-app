@@ -5,7 +5,6 @@ var app = {
 	Routers: {}
 }
 var map
-var loggedIn
 var morning
 var activePins = 0
 var pinColors = [
@@ -19,13 +18,11 @@ var pinColors = [
 	'teal',
 	'pink',
 ]
-
+var rootUrl = "https://sluggr-api.herokuapp.com"
 var currentUserEmail
 
 //currently disused
 var userViewsArray = []
-var rootUrl = "https://sluggr-api.herokuapp.com"
-
 var showDrivers = function() {
 	//go through myUsers
 	app.myUsers.models = _.filter(app.myUsers.models, function(user) {

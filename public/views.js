@@ -248,6 +248,7 @@ app.Views.Signin = Backbone.View.extend({
 		}).success( function(data){
 			console.log("success", data)
 			setCurrentUser(data)
+			$("#signin").slideUp()
 			app.router.navigate("edit-profile", {trigger: true})
 			
 		}).error( function(error){
