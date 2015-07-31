@@ -5,6 +5,11 @@ app.Routers.MainRouter = Backbone.Router.extend({
 		//"users/:id": "viewUser",
 		"signin": "login",
 		"edit-profile":"edit",
+		"close": "closeView",
+	},
+
+	closeView: function(){
+		app.router.navigate("home", {trigger:true})
 	},
 
 	viewUserList: function() {
@@ -18,6 +23,7 @@ app.Routers.MainRouter = Backbone.Router.extend({
 		populateList()
 		$("#signin").slideUp()
 		$("#edit-user").slideUp()
+		$("#user-focus").slideUp()
 		$(".view-container").fadeOut()
 
 		//clear map
@@ -26,21 +32,7 @@ app.Routers.MainRouter = Backbone.Router.extend({
 		//uncheck checkboxes
 	},
 
-	//currently unused
-/*	viewUser: function(id) {
-		//make profile view active
-		$(".view-container").fadeIn()
 
-		var userId = id
-		var userModel = app.myUsers.find(function(user){
-			return user.get("id") === userId
-		})
-
-		if (userModel) {
-			console.log('yes')
-			app.profileView.render(userModel)
-		}
-	},*/
 
 	login: function() {
 		$(".view-container").fadeIn()
@@ -51,11 +43,6 @@ app.Routers.MainRouter = Backbone.Router.extend({
 	edit: function() {
 		$(".view-container").fadeIn()
 		$("#user-focus").slideDown()
-/*		var userId = app.CurrentUser.user.email
-		var userModel = app.myUsers.find(function(user){
-			return user.get("email") === userId
-		})*/
-
 //need a current user model, bc this is carrying chuff
 		var userModel = new User(app.CurrentUser)
 		console.log(userModel)

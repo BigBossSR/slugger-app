@@ -26,18 +26,18 @@
 				<a href="#">Get Started!</a>
 			</span>
 			<span class="lgd">
-				<a href="#edit-profile">My Profile</a> | 
-				<a href="#">My Rideshares</a>
+				<span id="current-user"></span> | 
+				<a href="#edit-profile">My Profile</a>
 			</span>
 
 			<!-- Info re: your car -->
 		</div>
 	</div>
-
 	<div class="view-container">
+		<div class="view-backdrop"></div>
 		<div id="user-focus"></div>
 		<div id="signin">
-			<div class="close"><a href="#home">x</a></div>
+			<div class="lgd close"><a href="#close">x</a></div>
 			<h2>Login</h2>
 			Email:<br>
 			<input type="email" id="loginEmail" autocomplete="true"><br>
@@ -151,7 +151,7 @@
 </template>
 
 <template id="profile-template">
-	<div class="prof__close">X</div>
+	<a class="prof__close" href="#close">X</a>
 	<div class="name-box">
 			<div class="prof prof__name">{{first_name}}</div>
 			<input type="text" class="edt edt__name" value="{{user.first_name}}">

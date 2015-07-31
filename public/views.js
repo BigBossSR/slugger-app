@@ -100,7 +100,6 @@ app.Views.Profile = Backbone.View.extend({
 	el: document.getElementById("user-focus"),
 
 	events: {
-		"click .prof__close": "hide",
 		"click .btn__discard" : "discardChanges",
 		"click .btn__save" : "saveEdits",
 		"keyup" : "exitCheck",

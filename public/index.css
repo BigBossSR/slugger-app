@@ -194,18 +194,25 @@ textarea {
 	width: 100%;
 	height: 85vh;
 	position: absolute;
-	background-color: RGBA(0,0,0,.7);
+	z-index: 99;
 	display: none;
+}
+
+.view-backdrop {
+	width: 100%;
+	height: 85vh;
+	position: absolute;
+	background-color: RGBA(0,0,0,.7);
 	z-index: 100;
 }
 
 #user-focus, #signin, #edit-user {
+	z-index: 101;
 	display: none;
-	position: absolute;
+	position: relative;
 	margin: 0 auto;
-	top: 35%;
-	left: 50%;
-	transform: translate(-50%, -50%);
+	top: 40%;
+	transform: translateY(-50%);
 	font-size: 1rem;
 	background-color: white;
 	border-radius: 15px;

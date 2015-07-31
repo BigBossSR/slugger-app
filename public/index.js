@@ -21,8 +21,6 @@ var pinColors = [
 var rootUrl = "https://sluggr-api.herokuapp.com"
 var currentUserEmail
 
-//currently disused
-var userViewsArray = []
 var showDrivers = function() {
 	//go through myUsers
 	app.myUsers.models = _.filter(app.myUsers.models, function(user) {
@@ -55,7 +53,7 @@ var viewProfile =  function(modelParam, collectionParam){
 var setCurrentUser = function(jsonData){
 	app.CurrentUser = jsonData
 	currentUserEmail = jsonData.user.email
-	console.log(jsonData)
+	$("#current-user").text(jsonData.user.	username)
 	formGroup()
 }
 
@@ -199,7 +197,6 @@ var populateList = function(){
 			_.map(app.myUsers.models, function(model) {
 //TO DO: only generate a view if user is groupless				
 				var view = new app.Views.User({model})
-				userViewsArray.push(view)
 				view.render()
 			})
 
@@ -210,7 +207,6 @@ var populateList = function(){
 
 $(document).on("ready", function(){
 	app.dispatcher = _.clone(Backbone.Events)
-
 
 	app.profileView = new app.Views.Profile()
 	app.signinView = new app.Views.Signin()
@@ -227,56 +223,16 @@ $(document).on("ready", function(){
 		morning = false
 		//app.myUsers.comparator = "evening_time"
 	}
-	
-	//a listener of requests to sort list. 
-		//Kill the views
-		//sort the collection
-		//generate new views
 
-	//a listener for filter requests
-		//jquery hide those that don't apply
-/*
-	$(".view-container").on("click", function(){
+
+	$(".view-backdrop").on("click", function(){
 		console.log('hello')
 		app.dispatcher.trigger("close")
 	})
-	*/
+
 	app.router = new app.Routers.MainRouter()
 	Backbone.history.start()
 
 	app.router.navigate("signin", {trigger:true})
 	
 })
-
-//fetch for dummy data, switched away from fetch b/c
-	//collection was not cooperating with data table
-/*	app.myUsers.fetch({
-		success: function(data) {
-			console.log(data)
-			app.myUsers.sort()
-			//this sorts by the "morning_time" comparator, which is dumb and does not account for too-early times
-			_.map(app.myUsers.models, function(model) {
-				//TO DO: only generate a view if user is groupless
-				
-				var view = new app.Views.User({model})
-				userViewsArray.push(view)
-				view.render()
-			})
-			app.router = new app.Routers.MainRouter()
-			Backbone.history.start()
-		}
-	})*/
-
-//derogated - functionality now exists on the view
-	/*app.myUsers.on("change", function(model){
-		var i = model.get("id") - 1
-		console.log('hi')
-		userViewsArray[i].updateView(model)
-	})*/
-
-	//this gives me an array of user views which i can sort
-/*	app.myUsers.on("add", function(model){		
-		var view = new app.Views.User({model})
-		userViewsArray.push(view)
-		view.render()
-	})*/
