@@ -27,6 +27,7 @@ var User = Backbone.Model.extend({
 
 		this.set("home_marker", homeMarker)
 		this.set("work_marker", workMarker)
+
 		var convertedMorning = convertTime(this.get("morning_time") )
 		var convertedEvening = convertTime(this.get("evening_time") )
 		this.set("morning_converted", convertedMorning)

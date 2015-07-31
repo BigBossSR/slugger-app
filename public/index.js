@@ -20,6 +20,7 @@ var pinColors = [
 ]
 var rootUrl = "https://sluggr-api.herokuapp.com"
 var currentUserEmail
+var errorCode
 
 var showDrivers = function() {
 	//go through myUsers
@@ -131,6 +132,8 @@ var convertTime = function(timeString) {
 }
 
 var initializeMap = function() {
+	
+	var bounds = new google.maps.LatLngBounds()
     //center on DC
     var mapOptions = {
 		center: { lat: 38.899, lng: -77.015},
@@ -138,7 +141,7 @@ var initializeMap = function() {
     };
     //create the map object
 	map = new google.maps.Map( document.getElementById('map-canvas'), mapOptions);
-	//add current user markers
+	
 	if (app.CurrentUser) {
 		var homeLatLng = new google.maps.LatLng(app.CurrentUser.itinerary.home_lat, app.CurrentUser.itinerary.home_lng )
 		var workLatLng = new google.maps.LatLng( app.CurrentUser.itinerary.work_lat, app.CurrentUser.itinerary.work_lng )
@@ -148,11 +151,18 @@ var initializeMap = function() {
 			map: map,
 		})
 
+		bounds.extend(homeMarker.position)
+
 		var workMarker = new google.maps.Marker({
 			position: workLatLng,
 			map: map,
 		})
+
+		bounds.extend(workMarker.position)
+		map.fitBounds(bounds)
 	}
+	//add current user markers
+	
 
 }
 //generate map on load
@@ -206,11 +216,11 @@ var populateList = function(){
 }
 
 $(document).on("ready", function(){
+
 	app.dispatcher = _.clone(Backbone.Events)
 
 	app.profileView = new app.Views.Profile()
 	app.signinView = new app.Views.Signin()
-	app.editView = new app.Views.EditUser()
 	app.groupView = new app.Views.GroupPanel()
 	
 	app.myUsers = new app.Collections.UserList
@@ -226,7 +236,6 @@ $(document).on("ready", function(){
 
 
 	$(".view-backdrop").on("click", function(){
-		console.log('hello')
 		app.dispatcher.trigger("close")
 	})
 

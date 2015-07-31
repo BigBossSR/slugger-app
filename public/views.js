@@ -22,15 +22,18 @@ app.Views.User = Backbone.View.extend({
 			this.$el.find(".pin-color").css( {"background-color": pinColors[activePins],
 				"display": "inline-block"} )
 			activePins+=1
+
+			
 		} else {
+			console.log("you just UNchecked the box")
 			activePins-=1
 			homeMarker.icon.fillColor = "none"
 			workMarker.icon.fillColor = "none"
 			homeMarker.setMap(null)
 			workMarker.setMap(null)
 			this.$el.find(".pin-color").fadeOut()
-		}
-		
+
+		}		
 	},
 
 	initialize: function(){
@@ -52,7 +55,10 @@ app.Views.User = Backbone.View.extend({
 
 	updateView: function(model){
 		var modelData = this.model.toJSON() 
-
+		if (this.$el.find(":checkbox:checked").length > 0 ) {
+			this.$el.find(":checkbox").prop("checked", true	)
+			console.log("update pinned")
+		}
 		this.$el.html( this.template(modelData) )
 	},
 
@@ -63,6 +69,7 @@ app.Views.User = Backbone.View.extend({
 
 	template: Handlebars.compile( $("#userlist-template").html() ),
 })
+
 
 app.Views.GroupUser = Backbone.View.extend({
 
@@ -104,6 +111,7 @@ app.Views.Profile = Backbone.View.extend({
 		"click .btn__save" : "saveEdits",
 		"keyup" : "exitCheck",
 		"click .prof__btn": "sendInvite",
+		"click .close" : "hide",
 	},
 
 	sendInvite: function(){
@@ -120,15 +128,19 @@ app.Views.Profile = Backbone.View.extend({
 		})
 			.success( function(data) {
 				formGroup()
+				populateList()
 			})
 			.error( function(error) {
 				console.log(error)
+				errorCode = error.responseText
+				app.router.navigate("error", {trigger: true})
+				formGroup()
+				populateList()
 			})
 		this.hide()
 	},
 
 	initialize: function(){
-		//DISUSED I believe
 		this.listenTo(app.dispatcher, "close", function(){
 			this.hide()
 		} )
@@ -254,25 +266,6 @@ app.Views.Signin = Backbone.View.extend({
 			console.log("error", error)
 		})
 	},
-
-})
-
-app.Views.EditUser = Backbone.View.extend({
-	el: document.getElementById("edit-user"),
-
-	events: {
-
-	},
-
-	exitCheck: function(event) {
-		closeViewOnEsc(event)
-	},
-//this will be sent by the router from app.currentuser
-	render: function(model){
-		this.$el.html( this.template( app.CurrentUser ) )
-	},
-
-	template: Handlebars.compile( $("#edit-user-template").html() ),
 
 })
 

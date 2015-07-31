@@ -2,10 +2,16 @@ app.Routers.MainRouter = Backbone.Router.extend({
 
 	routes: {
 		"home": "viewUserList",
-		//"users/:id": "viewUser",
 		"signin": "login",
 		"edit-profile":"edit",
 		"close": "closeView",
+		"error": "errorView",
+	},
+
+	errorView: function(){
+		$(".page-container").hide()
+		$("#error-view").show()
+		$("#error-code").text(errorCode)
 	},
 
 	closeView: function(){

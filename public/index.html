@@ -29,18 +29,16 @@
 				<span id="current-user"></span> | 
 				<a href="#edit-profile">My Profile</a>
 			</span>
-
-			<!-- Info re: your car -->
 		</div>
 	</div>
 	<div class="view-container">
 		<div class="view-backdrop"></div>
 		<div id="user-focus"></div>
 		<div id="signin">
-			<div class="lgd close"><a href="#close">x</a></div>
+			<div class="lgd close">x</a></div>
 			<h2>Login</h2>
 			Email:<br>
-			<input type="email" id="loginEmail" autocomplete="true"><br>
+			<input type="email" id="loginEmail" autocomplete="on"><br>
 			Password:<br>
 			<input type="password" id="loginPassword">
 			<div class="row">
@@ -68,19 +66,10 @@
 				</div>
 			</div>
 		</div>
-		<div id="edit-user"></div>
 	</div>
-
 
 	<div id="map-container">
 		<div id ="map-canvas"></div>
-<!-- 		<iframe
-			 width="100%"
-			 height="100%"
-			 frameborder="0" style="border:0"
-			 src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCqUON2u3RClI42Sh-50zz3NiWf0ZigDYA&q=Washington,DC" allowfullscreen>
-		</iframe> -->
-
 	</div>
 
 	<div id="right-sidebar">
@@ -123,9 +112,15 @@
 	</div>
 </div>
 
+<div id="error-view">
+	<img src="assets/penguin.gif">
+	<h1>Sorry, traveler!</h1>
+	<h2 id="error-code"></h2>
+	<p>It looks like something went wrong. Try hitting "back" to start over.</p>
+</div>
 
-<template id="userlist-template">
-	
+
+<template id="userlist-template">	
 	<div class="usr__info">
 		<div class="row">
 			<input type="checkbox"/>
@@ -135,7 +130,6 @@
 		<div class="row">
 			<div class="usr-detail">{{#if driver}}🚘{{else}}🚶{{/if}}</div>
 			<div class="time usr-detail">{{time}}</div>
-
 		</div>
 	</div>
 	<div class="usr__locs usr-detail">
@@ -143,15 +137,11 @@
 		{{depart}} >
 		</div>
 		<div class="locations"> > {{dest}} </div>
-	</div>	
-
-		
-		
-
+	</div>
 </template>
 
 <template id="profile-template">
-	<a class="prof__close" href="#close">X</a>
+	<a class="close" >X</a>
 	<div class="name-box">
 			<div class="prof prof__name">{{first_name}}</div>
 			<input type="text" class="edt edt__name" value="{{user.first_name}}">
@@ -171,8 +161,6 @@
 		<span class="edt sun-emoji">☀ <input class="edt__am" type="text" value="{{itinerary.morning_time}}"> </span>
 		<span class="edt">🌙 <input class="edt__pm" type="text" value="{{itinerary.evening_time}}"></span>
 	</div>
-
-
 	<div class="edt">Driver? <input type="checkbox" id="edt__driver"></div>
 	
 	<div>
@@ -188,11 +176,6 @@
 
 	<div class="pin-color"></div>
 	<div class="grp grp__info"> {{first_name}}|{{time}}|{{depart}}</div>
-
-</template>
-
-<template id="edit-user-template">
-<!-- make these conditionals - if no info, autofill the field type -->
 </template>
 
 

@@ -24,6 +24,10 @@ textarea {
 	font-size: 0;
 }
 
+#error-view {
+	display: none;
+}
+
 .header {
 	width: 100%;
 	height: 15vh;
