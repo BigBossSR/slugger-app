@@ -22,97 +22,7 @@ var rootUrl = "https://sluggr-api.herokuapp.com"
 var currentUserEmail
 var errorCode
 
-var showDrivers = function() {
-	//go through myUsers
-	app.myUsers.models = _.filter(app.myUsers.models, function(user) {
-		return user.get("driver") === true
-	})
-}
-
-var showRiders = function() {
-	app.myUsers.models = _.reject(app.myUsers.models, function(user) {
-		return user.get("driver") === true
-	})
-}
-
-var viewProfile =  function(modelParam, collectionParam){
-	$(".view-container").fadeIn()
-	$(".edt").hide()
-	$(".prof").show()
-	$("#user-focus").slideDown()
-	//finds the model of the clicked view, to populate the profile view
-	var userId = modelParam.get("email")
-	var userModel = collectionParam.find(function(user){
-		return user.get("email") === userId
-	})
-
-	if (userModel) {
-		app.profileView.render(userModel)
-	}
-}
-
-var setCurrentUser = function(jsonData){
-	app.CurrentUser = jsonData
-	currentUserEmail = jsonData.user.email
-	$("#current-user").text(jsonData.user.	username)
-	formGroup()
-}
-
-var formGroup = function(){
-
-	//create a new group for the user
-	if (app.carpool){
-		app.carpool.reset()
-		//temp disabled to check about disappearing group lists
-	} else {
-		app.carpool = new app.Collections.Group()
-	}
-	//call the server for anyone currently in group
-	app.carpool.fetch({
-		headers: {email: app.CurrentUser.user.email},
-		//data: {rider_id: inviteId},
-	})
-		.success( function(data){ 
-			console.log(data)
-			activePins=0
-			_.each(app.carpool.models, function(model){
-				model.initialize()
-				var view = new app.Views.GroupUser({model})
-				view.render()
-				//drop pins for everyone but current user - needs DRYed
-				if (view.model.get("email") !== currentUserEmail) {
-					var homeMarker = view.model.get("home_marker")
-					var workMarker = view.model.get("work_marker")
-					
-					homeMarker.icon.fillColor = pinColors[activePins]
-					workMarker.icon.fillColor = pinColors[activePins]
-					
-					homeMarker.setMap(map)
-					workMarker.setMap(map)
-					activePins+=1
-				}
-			})
-			//show button if they have a carpool group
-			if (app.carpool.length > 0) {
-				//if current user is owner let them disband
-				if (currentUserEmail === data.group[0].email){
-					$(".leave").hide()
-					$(".disband").show()
-				} else {
-					$(".leave").show()
-					$(".disband").hide()
-				}
-			}
-		}) 
-		
-		.error( function(error){
-			console.log(error)
-		})
-	populateList()
-}
-
-var convertTime = function(timeString) {
-	
+var convertTime = function(timeString) {	
 	var d = new Date(timeString)
 	var h = d.getUTCHours()
 	var m = d.getUTCMinutes()
@@ -131,10 +41,9 @@ var convertTime = function(timeString) {
 	return convertedTime
 }
 
-var initializeMap = function() {
-	
+var initializeMap = function() {	
 	var bounds = new google.maps.LatLngBounds()
-    //center on DC
+    //center on DC by default
     var mapOptions = {
 		center: { lat: 38.899, lng: -77.015},
     	zoom: 10
@@ -142,31 +51,28 @@ var initializeMap = function() {
     //create the map object
 	map = new google.maps.Map( document.getElementById('map-canvas'), mapOptions);
 	
+	//drop pins at home and work locations
+		//use them as map boundaries
 	if (app.CurrentUser) {
 		var homeLatLng = new google.maps.LatLng(app.CurrentUser.itinerary.home_lat, app.CurrentUser.itinerary.home_lng )
-		var workLatLng = new google.maps.LatLng( app.CurrentUser.itinerary.work_lat, app.CurrentUser.itinerary.work_lng )
-
 		var homeMarker = new google.maps.Marker({
 			position: homeLatLng,
 			map: map,
 		})
-
 		bounds.extend(homeMarker.position)
 
+		var workLatLng = new google.maps.LatLng( app.CurrentUser.itinerary.work_lat, app.CurrentUser.itinerary.work_lng )
 		var workMarker = new google.maps.Marker({
 			position: workLatLng,
 			map: map,
 		})
-
 		bounds.extend(workMarker.position)
-		map.fitBounds(bounds)
+			map.fitBounds(bounds)
 	}
 	//add current user markers
-	
-
 }
 //generate map on load
-google.maps.event.addDomListener(window, 'load', initializeMap)
+//google.maps.event.addDomListener(window, 'load', initializeMap)
 
 var closeViewOnEsc = function(e) {
 	if (e.keyCode === 27) {
@@ -176,51 +82,14 @@ var closeViewOnEsc = function(e) {
 	}
 }
 
-var populateList = function(){
-	if (app.CurrentUser) {
-		emailString = app.CurrentUser.user.email
-	}
-
-	$.ajax(rootUrl+"/demo_users", {
-		method: "GET",
-		headers: {
-				email: emailString
-			},
-		//Consider moving this to a collection render method
-		success: function(json) {
-			//reset the user collection so it doesn't repeat
-			app.myUsers.reset()
-			app.dispatcher.trigger("reset")
-
-			var userList = json.user
-
-			_.each(userList, function(item){
-			   app.myUsers.add(item) 
-			})
-
-			if (app.CurrentUser && app.CurrentUser.user.driver) {
-				showRiders()
-			} else {
-				showDrivers()
-			}
-
-			_.map(app.myUsers.models, function(model) {
-//TO DO: only generate a view if user is groupless				
-				var view = new app.Views.User({model})
-				view.render()
-			})
-
-	//consider instantiating a second router, in case users don't populate
-		}
-	})
-}
-
 $(document).on("ready", function(){
+	initializeMap()
 
 	app.dispatcher = _.clone(Backbone.Events)
 
 	app.profileView = new app.Views.Profile()
 	app.signinView = new app.Views.Signin()
+	app.carpool = new app.Collections.Group()
 	app.groupView = new app.Views.GroupPanel()
 	
 	app.myUsers = new app.Collections.UserList

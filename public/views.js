@@ -12,9 +12,12 @@ app.Views.User = Backbone.View.extend({
 
 		if ( this.$el.find(":checkbox:checked").length > 0 ) {	
 			//cycle through an arbitrary array of colors to vary user pins
-			//this will break if too many pins
+			if (activePins > pinColors.length) {
+				activePins = 0
+			}
 			homeMarker.icon.fillColor = pinColors[activePins]
-			workMarker.icon.fillColor = pinColors[activePins]	
+			workMarker.icon.fillColor = pinColors[activePins]
+			//put the markers on the map
 			homeMarker.setMap(map)
 			workMarker.setMap(map)
 			//show an el with same bg color as the marker 
@@ -22,17 +25,12 @@ app.Views.User = Backbone.View.extend({
 			this.$el.find(".pin-color").css( {"background-color": pinColors[activePins],
 				"display": "inline-block"} )
 			activePins+=1
-
 			
 		} else {
-			console.log("you just UNchecked the box")
 			activePins-=1
-			homeMarker.icon.fillColor = "none"
-			workMarker.icon.fillColor = "none"
 			homeMarker.setMap(null)
 			workMarker.setMap(null)
 			this.$el.find(".pin-color").fadeOut()
-
 		}		
 	},
 
@@ -41,7 +39,7 @@ app.Views.User = Backbone.View.extend({
 			console.log("change")
 			this.updateView(this.model) 
 		})
-		this.listenTo(app.dispatcher, "reset", function(){
+		this.listenTo(this.model.collection, "reset", function(){
 			console.log("reset user view")
 			this.remove()
 		})
@@ -64,7 +62,9 @@ app.Views.User = Backbone.View.extend({
 
 //open a user profile
 	viewUser: function() {
-		viewProfile(this.model, this.model.collection)
+		$("#user-focus").css("background", "white")
+		$(".close").css("color", "cornflowerblue")
+		app.profileView.render(this.model)
 	},
 
 	template: Handlebars.compile( $("#userlist-template").html() ),
@@ -81,13 +81,14 @@ app.Views.GroupUser = Backbone.View.extend({
 
 	initialize: function(){
 		this.listenTo(this.model.collection, "reset", function(){
-			console.log("group reset")
 			this.remove()
 		})
 	},
 
 	viewGroupMember: function(){
-		viewProfile(this.model, this.model.collection)
+		$("#user-focus").css("background", "cornflowerblue")
+		$(".close").css("color", "white")
+		app.profileView.render(this.model)
 	},
 
 	render: function(model){
@@ -127,15 +128,15 @@ app.Views.Profile = Backbone.View.extend({
 			}
 		})
 			.success( function(data) {
-				formGroup()
-				populateList()
+				app.carpool.formGroup()
+				app.myUsers.populateList()
 			})
 			.error( function(error) {
 				console.log(error)
 				errorCode = error.responseText
 				app.router.navigate("error", {trigger: true})
-				formGroup()
-				populateList()
+				app.carpool.formGroup()
+				app.myUsers.populateList()
 			})
 		this.hide()
 	},
@@ -151,6 +152,10 @@ app.Views.Profile = Backbone.View.extend({
 	},
 
 	render: function(model) {
+		$(".view-container").fadeIn()
+		$(".edt").hide()
+		$(".prof").show()
+		$("#user-focus").slideDown()
 		this.$el.html( this.template(model.toJSON() ) )
 		this.model = model
 	},
@@ -216,9 +221,17 @@ app.Views.Signin = Backbone.View.extend({
 		closeViewOnEsc(event)
 	},
 
+	setCurrentUser: function(jsonData){
+		app.CurrentUser = jsonData
+		currentUserEmail = jsonData.user.email
+		$("#current-user").text(jsonData.user.username)
+		app.carpool.formGroup()
+	},
+
 	loginUser: function() {
 		var email = $("#loginEmail").val()
 		var password = $("#loginPassword").val()
+		var viewObject= this
 
 		$.ajax(rootUrl + "", {
 			method: "GET",
@@ -228,16 +241,11 @@ app.Views.Signin = Backbone.View.extend({
 			},
 		}).
 			success( function(json) {
-				console.log(json)
-				//go through "users" to find a match
-				
-
 				if (json.error) {
 					alert(json.error)
 					return
 				}
-
-				setCurrentUser(json)
+				viewObject.setCurrentUser(json)
 				app.router.navigate("home", {trigger: true})
 			}
 		).error(function (error){
@@ -247,6 +255,7 @@ app.Views.Signin = Backbone.View.extend({
 	},
 
 	registerUser: function(){
+		var viewObject= this
 		$.ajax(rootUrl + "/demo_user/create", {
 			method: "POST",
 			data: {
@@ -258,7 +267,7 @@ app.Views.Signin = Backbone.View.extend({
 			},
 		}).success( function(data){
 			console.log("success", data)
-			setCurrentUser(data)
+			viewObject.setCurrentUser(data)
 			$("#signin").slideUp()
 			app.router.navigate("edit-profile", {trigger: true})
 			
@@ -299,7 +308,7 @@ app.Views.GroupPanel = Backbone.View.extend({
 				console.log("group disbanded")
 				app.carpool.reset()
 				$(".disband").hide()
-				populateList()
+				app.myUsers.populateList()
 				initializeMap()
 			})
 	},

@@ -26,7 +26,7 @@ app.Routers.MainRouter = Backbone.Router.extend({
 			//group display options if driver
 		}
 
-		populateList()
+		app.myUsers.populateList()
 		$("#signin").slideUp()
 		$("#edit-user").slideUp()
 		$("#user-focus").slideUp()
@@ -36,6 +36,9 @@ app.Routers.MainRouter = Backbone.Router.extend({
 		initializeMap()
 		activePins = 0
 		//uncheck checkboxes
+		if (app.carpool.length > 1) {
+			app.carpool.formGroup()
+		}
 	},
 
 
