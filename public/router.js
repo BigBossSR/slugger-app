@@ -26,10 +26,11 @@ app.Routers.MainRouter = Backbone.Router.extend({
 			//group display options if driver
 		}
 
-		app.myUsers.populateList()
+		app.carpool.formGroup()
 		$("#signin").slideUp()
 		$("#edit-user").slideUp()
 		$("#user-focus").slideUp()
+		$("#user-focus").css("background", "white")
 		$(".view-container").fadeOut()
 
 		//clear map
@@ -52,6 +53,7 @@ app.Routers.MainRouter = Backbone.Router.extend({
 	edit: function() {
 		$(".view-container").fadeIn()
 		$("#user-focus").slideDown()
+		$("#user-focus").css("background","rgb(233, 242, 242)")
 //need a current user model, bc this is carrying chuff
 		var userModel = new User(app.CurrentUser)
 		console.log(userModel)

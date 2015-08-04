@@ -11,7 +11,7 @@ a {
 }
 
 textarea {
-	width: 49%;
+	width: 95%;
 }
 
 .col {
@@ -213,19 +213,27 @@ textarea {
 	z-index: 100;
 }
 
-#user-focus, #signin, #edit-user {
+.focus-views {
+	background-color: white;
+}
+
+.editing {
+	background-color: rgb(233, 242, 242);
+}
+
+#user-focus, #signin {
 	z-index: 101;
 	display: none;
 	position: relative;
 	margin: 0 auto;
 	top: 40%;
 	transform: translateY(-50%);
-	font-size: 1rem;
-	background-color: white;
-	border-radius: 15px;
+	font-size: .85rem;
+    border-left: rgb(35, 35, 35) solid 30px;
 	padding: 3%;
-	width: 40%;
+	width: 50%;
 	font-family: Tahoma;
+	background-color: white;
 }
 
 #signin {
@@ -234,12 +242,26 @@ textarea {
 	color: white;
 }
 
+#edit-user {
+	background-color: lightblue;
+}
+
 #register-box{
-	display: hidden;
+	display: none;
 }
 
 .edt {
 	display: none;
+}
+
+.edt--input {
+	color: rgb(95, 95,95);
+	font-size: .85rem;
+	border-radius: 5px;
+	border: lightblue solid 1px;
+	padding: 1%;
+    padding-left: 2%;
+
 }
 
 .close {
@@ -263,7 +285,7 @@ textarea {
 	font-style: italic;
 }
 
-.name-box {
+/*.name-box {
 	display: inline-block;
 	width: 40%;
 	vertical-align: top;
@@ -272,6 +294,18 @@ textarea {
 .addr-box {
 	display: inline-block;
 	width: 58%;
+}
+
+.time-box {
+	text-align: center;
+}*/
+
+.row {
+	margin: 2% 0;
+}
+
+.edt__time {
+	width: 30%;
 }
 
 
@@ -284,6 +318,7 @@ textarea {
     color: white;
     padding: 3px 5px;
     margin-top: 1.5%;
+    border-style: groove;
 }
 
 

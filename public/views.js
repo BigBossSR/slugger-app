@@ -62,8 +62,6 @@ app.Views.User = Backbone.View.extend({
 
 //open a user profile
 	viewUser: function() {
-		$("#user-focus").css("background", "white")
-		$(".close").css("color", "cornflowerblue")
 		app.profileView.render(this.model)
 	},
 
@@ -86,8 +84,6 @@ app.Views.GroupUser = Backbone.View.extend({
 	},
 
 	viewGroupMember: function(){
-		$("#user-focus").css("background", "cornflowerblue")
-		$(".close").css("color", "white")
 		app.profileView.render(this.model)
 	},
 
@@ -128,8 +124,7 @@ app.Views.Profile = Backbone.View.extend({
 			}
 		})
 			.success( function(data) {
-				app.carpool.formGroup()
-				app.myUsers.populateList()
+				app.router.navigate("home", {trigger:true})
 			})
 			.error( function(error) {
 				console.log(error)
@@ -138,7 +133,6 @@ app.Views.Profile = Backbone.View.extend({
 				app.carpool.formGroup()
 				app.myUsers.populateList()
 			})
-		this.hide()
 	},
 
 	initialize: function(){
@@ -215,6 +209,11 @@ app.Views.Signin = Backbone.View.extend({
 		"click .btn__login" : "loginUser",
 		"click .btn__register": "registerUser",
 		"keyup :input" : "exitCheck",
+		"click #reg" : "displayReg",
+	},
+
+	displayReg: function(){
+		$("#register-box").slideDown()
 	},
 
 	exitCheck: function(event) {
@@ -225,7 +224,6 @@ app.Views.Signin = Backbone.View.extend({
 		app.CurrentUser = jsonData
 		currentUserEmail = jsonData.user.email
 		$("#current-user").text(jsonData.user.username)
-		app.carpool.formGroup()
 	},
 
 	loginUser: function() {

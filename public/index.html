@@ -34,38 +34,40 @@
 	</div>
 	<div class="view-container">
 		<div class="view-backdrop"></div>
-		<div id="user-focus"></div>
-		<div id="signin">
-			<div class="lgd close">x</a></div>
-			<h2>Login</h2>
-			Email:<br>
-			<input type="text" id="loginEmail" autocomplete="on"><br>
-			Password:<br>
-			<input type="password" id="loginPassword">
-			<div class="row">
-				<button type="button" class="btn btn__login">Log In</button>
-			</div>
-			<h2>...or Register a Slug</h2>
-			<div id="register-box">
-				<div class="col">
-					<div class="row">Email:</div>
-					<div class="row"><input type="email" id="register-email"></div>
-					<div class="row">Password:</div>
-					<div class="row"><input type="password" id="register-password"></div>
-				</div>
-				<div class="col">
-					<div class="row">First Name:</div>
-					<div class="row"><input type="text" id="register-firstname"></div>
-					<div class="row">Username:</div>
-					<div class="row"><input type="text" id="register-username"></div>
-				</div>
-				<div class="row">
-					Driver? <input type="checkbox" id="register-driver">
-				</div>
-				<div class="row">
-					<button type="button" class="btn btn__register">Register</button>
-				</div>
-			</div>
+
+				<div id="user-focus"></div>
+				<div id="signin">
+					<div class="lgd close">x</a></div>
+					<h2>Login</h2>
+					Email:<br>
+					<input type="text" id="loginEmail" autocomplete="on"><br>
+					Password:<br>
+					<input type="password" id="loginPassword">
+					<div class="row">
+						<button type="button" class="btn btn__login">Log In</button>
+					</div>
+					<h2 id="reg">...or Register a Slug</h2>
+					<div id="register-box">
+						<div class="col">
+							<div class="row">Email:</div>
+							<div class="row"><input type="email" id="register-email"></div>
+							<div class="row">Password:</div>
+							<div class="row"><input type="password" id="register-password"></div>
+						</div>
+						<div class="col">
+							<div class="row">First Name:</div>
+							<div class="row"><input type="text" id="register-firstname"></div>
+							<div class="row">Username:</div>
+							<div class="row"><input type="text" id="register-username"></div>
+						</div>
+						<div class="row">
+							Driver? <input type="checkbox" id="register-driver">
+						</div>
+						<div class="row">
+							<button type="button" class="btn btn__register">Register</button>
+						</div>
+					</div>
+
 		</div>
 	</div>
 
@@ -144,30 +146,40 @@
 <template id="profile-template">
 	<a class="close">X</a>
 	<div class="name-box">
-			<div class="prof prof__name">{{first_name}}</div>
-			<input type="text" class="edt edt__name" value="{{user.first_name}}">
-			<div class="prof prof__username">{{username}}</div>
-			<input type="text" class="edt edt__username" value="{{user.username}}">
+			<div class="first-name row">
+				<span class="prof prof__name">{{first_name}}</span>
+				<input type="text" class="edt edt__name edt--input" value="{{user.first_name}}">
+			</div>
+			<div class="username row">
+				<span class="prof prof__username">{{username}}</span>
+				<input type="text" class="edt edt__username edt--input" value="{{user.username}}">
+			</div>
 	</div>
 	<div class="addr-box">
-			<div class="prof">🏠 {{home_locale}}</div>
-			<div class="edt">🏠 <input class="edt__home" type="text" value="{{itinerary.home_locale}}"></div>
-			<div class="prof">🏢 {{work_locale}}</div>
-			<div class="edt">🏢 <input class="edt__work" type="text" value="{{itinerary.work_locale}}"></div>
+		<div class="home row"> 🏠
+			<span class="prof">{{home_locale}}</span>
+			<input class="edt edt__home edt--input" type="text" value="{{itinerary.home_locale}}">
+		</div>
+		<div class="work row">🏢 
+			<span class="prof">{{work_locale}}</span>
+			<input class="edt edt__work edt--input" type="text" value="{{itinerary.work_locale}}">
+		</div>
 	</div>
-	<div >
-		<span class="prof" ><span class="sun-emoji">☀</span> {{morning_converted}} </span>
-		<span class="prof">🌙 {{evening_converted}}</span>
-		<span class="edt sun-emoji">☀ <input class="edt__am" type="text" value="{{itinerary.morning_time}}"> </span>
-		<span class="edt">🌙 <input class="edt__pm" type="text" value="{{itinerary.evening_time}}"></span>
+	<div class="time-box">
+		<span class="sun-emoji">☀</span>
+		<span class="prof">{{morning_converted}}</span>
+		<input class="edt edt__time edt--input" type="text" value="{{itinerary.morning_time}}">
+		 | 🌙
+		<span class="prof">{{evening_converted}}</span>
+		<input class="edt edt__time edt--input" type="text" value="{{itinerary.evening_time}}">
 	</div>
 	<div class="edt">Driver? <input type="checkbox" id="edt__driver"></div>
 	
 	<div>
 		<div class="prof">Preferences: {{preferences}}</div>
 		<div class="prof">Bio: {{bio}}</div>
-		 <textarea rows="7" class="edt edt__pref">{{user.preferences}}</textarea>
-		<textarea rows="7" class="edt edt__bio">{{user.bio}}</textarea>
+		 <textarea rows="4" class="edt edt__pref edt--input">{{user.preferences}}</textarea>
+		<textarea rows="4" class="edt edt__bio edt--input">{{user.bio}}</textarea>
 	</div>
 	<button class="edt btn btn__discard">Discard Changes</button>
 	<button class="edt btn btn__save">Save Changes</button>
