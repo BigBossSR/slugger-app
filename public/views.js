@@ -124,7 +124,7 @@ app.Views.Profile = Backbone.View.extend({
 			}
 		})
 			.success( function(data) {
-				app.router.navigate("home", {trigger:true})
+				app.router.navigate("close", {trigger:true})
 			})
 			.error( function(error) {
 				console.log(error)
