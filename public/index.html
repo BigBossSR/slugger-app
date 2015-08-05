@@ -167,11 +167,11 @@
 	</div>
 	<div class="time-box">
 		<span class="sun-emoji">☀</span>
-		<span class="prof">{{morning_converted}}</span>
-		<input class="edt edt__time edt--input" type="text" value="{{itinerary.morning_time}}">
+		<span class="prof">{{morning_time}}</span>
+		<input class="edt edt__am edt--input" type="text" value="{{itinerary.morning_time}}">
 		 | 🌙
-		<span class="prof">{{evening_converted}}</span>
-		<input class="edt edt__time edt--input" type="text" value="{{itinerary.evening_time}}">
+		<span class="prof">{{evening_time}}</span>
+		<input class="edt edt__pm edt--input" type="text" value="{{itinerary.evening_time}}">
 	</div>
 	<div class="edt">Driver? <input type="checkbox" id="edt__driver"></div>
 	
@@ -187,9 +187,13 @@
 </template>
 
 <template id="group-template">
-
+<!-- Why is this not working? -->
 	<div class="pin-color"></div>
-	<div class="grp grp__info"> {{first_name}}|{{time}}|{{depart}}</div>
+	<div class="grp grp__info"> 
+		<span class="grp grp__item">{{first_name}}</span>
+		<span class="grp grp__item">{{time}}</span>
+		<span class="grp grp__item">{{depart}}</span>
+	</div>
 </template>
 
 

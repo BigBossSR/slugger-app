@@ -68,6 +68,7 @@ var initializeMap = function() {
 		})
 		bounds.extend(workMarker.position)
 			map.fitBounds(bounds)
+			map.setZoom(10)
 	}
 	//add current user markers
 }
@@ -83,6 +84,7 @@ var closeViewOnEsc = function(e) {
 }
 
 $(document).on("ready", function(){
+
 	initializeMap()
 
 	app.dispatcher = _.clone(Backbone.Events)
@@ -102,7 +104,10 @@ $(document).on("ready", function(){
 		morning = false
 		//app.myUsers.comparator = "evening_time"
 	}
-
+/*
+	setInterval(function(){
+		app.carpool.formGroup()
+	}, 30000)*/
 
 	$(".view-backdrop").on("click", function(){
 		app.dispatcher.trigger("close")

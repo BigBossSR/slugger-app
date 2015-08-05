@@ -321,4 +321,13 @@ textarea {
     border-style: groove;
 }
 
+.grp__item {
+	margin-right: 3px;
+	padding-right: 5px;
+	border-right: solid 1px white;
+}
+
+.grp__info {
+	margin-bottom: 3px;
+}
 

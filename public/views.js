@@ -177,6 +177,8 @@ app.Views.Profile = Backbone.View.extend({
 				app.CurrentUser.user.driver = false
 			}
 
+
+
 		//app.CurrentUser.save()
 		$.ajax(rootUrl + "/demo_user/edit",{
 			method: "PUT",
@@ -186,6 +188,7 @@ app.Views.Profile = Backbone.View.extend({
 			data: app.CurrentUser,
 		}).success(function(data) {
 			console.log("success updating", data)
+			$("#current-user").text(data.user.username)
 			app.router.navigate("home", {trigger: true})
 		}).error(function(error){
 			console.log("error updating", error)
