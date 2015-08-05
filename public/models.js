@@ -1,7 +1,38 @@
 var User = Backbone.Model.extend({
 
 	initialize: function() {
-		//set an unplaced Google Map marker
+		this.setNextItinerary()
+		this.setMapMarkers()
+		this.convertLoginDate(this.get("last_login"))
+	},
+
+
+	setNextItinerary: function(){
+		/*	var convertedMorning = convertTime(this.get("morning_time") )
+		var convertedEvening = convertTime(this.get("evening_time") )
+		this.set("morning_converted", convertedMorning)
+		this.set("evening_converted", convertedEvening)*/
+//this will need updating if tables change
+	//also this is probably superfluous and could be handled with HBars conditionals
+		if (morning) {
+			this.set({
+				depart: this.get("home_locale"),
+				dest : this.get("work_locale"),
+				//time : this.get("morning_converted")
+				time: this.get("morning_time")
+			})
+		} else {
+			this.set({
+				depart : this.get("work_locale"),
+				dest : this.get("home_locale"),
+				//time : this.get("evening_converted")
+				time: this.get("evening_time")
+			})
+		}
+	},
+
+	setMapMarkers: function(){
+			//set an unplaced Google Map marker
 		var homeLatLng = new google.maps.LatLng(this.get("home_lat"), this.get("home_lng") )
 		var workLatLng = new google.maps.LatLng( this.get("work_lat"), this.get("work_lng") )
 
@@ -27,28 +58,11 @@ var User = Backbone.Model.extend({
 
 		this.set("home_marker", homeMarker)
 		this.set("work_marker", workMarker)
+	},
 
-	/*	var convertedMorning = convertTime(this.get("morning_time") )
-		var convertedEvening = convertTime(this.get("evening_time") )
-		this.set("morning_converted", convertedMorning)
-		this.set("evening_converted", convertedEvening)*/
-//this will need updating if tables change
-	//also this is probably superfluous and could be handled with HBars conditionals
-		if (morning) {
-			this.set({
-				depart: this.get("home_locale"),
-				dest : this.get("work_locale"),
-				//time : this.get("morning_converted")
-				time: this.get("morning_time")
-			})
-		} else {
-			this.set({
-				depart : this.get("work_locale"),
-				dest : this.get("home_locale"),
-				//time : this.get("evening_converted")
-				time: this.get("evening_time")
-			})
-		}
+	convertLoginDate: function(dateTime) {
+		var d = new Date(dateTime).toLocaleString()
+		this.set("last_login_converted", d)
 	},
 
 	validate: function(attrs) {

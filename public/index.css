@@ -304,7 +304,7 @@ textarea {
 	margin: 2% 0;
 }
 
-.edt__time {
+.edt__am, .edt__pm {
 	width: 30%;
 }
 

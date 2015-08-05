@@ -22,7 +22,7 @@ var rootUrl = "https://sluggr-api.herokuapp.com"
 var currentUserEmail
 var errorCode
 
-var convertTime = function(timeString) {	
+/*var convertTime = function(timeString) {	
 	var d = new Date(timeString)
 	var h = d.getUTCHours()
 	var m = d.getUTCMinutes()
@@ -39,7 +39,7 @@ var convertTime = function(timeString) {
 		convertedTime = h+":"+m+" AM"
 	}
 	return convertedTime
-}
+}*/
 
 var initializeMap = function() {	
 	var bounds = new google.maps.LatLngBounds()
