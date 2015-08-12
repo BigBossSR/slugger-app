@@ -124,6 +124,7 @@ app.Views.Profile = Backbone.View.extend({
 			}
 		})
 			.success( function(data) {
+				console.log(data)
 				app.router.navigate("close", {trigger:true})
 			})
 			.error( function(error) {
@@ -213,6 +214,12 @@ app.Views.Signin = Backbone.View.extend({
 		"click .btn__register": "registerUser",
 		"keyup :input" : "exitCheck",
 		"click #reg" : "displayReg",
+		"click .visiting": "visitorEnter",
+	},
+
+	visitorEnter: function(){
+		$("#loginEmail").val("a@b.com")
+		this.loginUser()
 	},
 
 	displayReg: function(){
@@ -234,7 +241,7 @@ app.Views.Signin = Backbone.View.extend({
 		var password = $("#loginPassword").val()
 		var viewObject= this
 
-		$.ajax(rootUrl + "", {
+		$.ajax(rootUrl, {
 			method: "GET",
 			headers: {
 				email: email,
@@ -246,6 +253,7 @@ app.Views.Signin = Backbone.View.extend({
 					alert(json.error)
 					return
 				}
+				console.log(json)
 				viewObject.setCurrentUser(json)
 				app.router.navigate("home", {trigger: true})
 			}

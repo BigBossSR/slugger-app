@@ -61,7 +61,7 @@ var User = Backbone.Model.extend({
 	},
 
 	convertLoginDate: function(dateTime) {
-		var d = new Date(dateTime).toLocaleString()
+		var d = new Date(dateTime).toDateString()
 		this.set("last_login_converted", d)
 	},
 
